@@ -1,0 +1,4 @@
+split,clock_hours,observed_hours,sales,eligible_forecast_hours
+test,2520,1622,115017.96,1622
+train,8760,5538,265411.68,5526
+validation,2159,1359,68438.06,1359

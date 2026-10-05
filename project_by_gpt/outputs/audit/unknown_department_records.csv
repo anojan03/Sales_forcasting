@@ -1,0 +1,70 @@
+Product_Name,record_class,rows,sales
+*** ZUBAR 4 BEERS,promotion_adjustment,2,-0.72
+***2 FOR 2.20 YAZOO,promotion_adjustment,3,-1.1400000000000001
+***4FOR £6.00 DEAL,promotion_adjustment,2,-0.72
+***ANY 3 FOR 7£ BOTTLE 500ML,promotion_adjustment,25,-12.85
+***BEER CAN 500ML,promotion_adjustment,48,-18.060000000000002
+***BEER CANS ,promotion_adjustment,1600,-1177.46
+***BEER CANS 500ML,promotion_adjustment,672,-393.12000000000006
+***BEER CANS STORNG,promotion_adjustment,362,-111.64
+***BOTTLE BEER,promotion_adjustment,28,-8.46
+***BROTHERS PREMIUM CIDER CAN 500ML,promotion_adjustment,4,-3.52
+***BUDWEISER ,promotion_adjustment,2,-0.52
+***BUDWEISER BOTTLE,promotion_adjustment,55,-8.8
+***BUY 4 FOR £6.00,promotion_adjustment,3,-1.8399999999999999
+***Biscuits ,promotion_adjustment,67,-7.2
+***Buy 2 For £7.99,promotion_adjustment,119,-270.64
+***Buy 2 For £8.00 VAPES,promotion_adjustment,1,-1.98
+***Buy 2 for £1.00,promotion_adjustment,24,-5.46
+***Buy 2 for £3.99,promotion_adjustment,2,-1.98
+***Buy 2 for £4.00,promotion_adjustment,8,-4.64
+***Buy 2 for £5.00,promotion_adjustment,1,-0.98
+***Buy 3 for £1.39,promotion_adjustment,1,-0.08
+***Buy 3 for £12.00,promotion_adjustment,4,-3.48
+***Buy 3 for £5.00,promotion_adjustment,2,-4.34
+***Buy 3 for £6.00,promotion_adjustment,31,-29.45
+***Buy 3 for £7.50,promotion_adjustment,8,-5.129999999999999
+***Buy 4 for £4.50,promotion_adjustment,1,-0.66
+***Buy 4 for £4.99,promotion_adjustment,3,-0.51
+***Buy 4 for £6.00,promotion_adjustment,9,-3.6399999999999997
+***Buy 4 for £6.50,promotion_adjustment,7,-1.82
+***Buy 4 for £7.00,promotion_adjustment,83,-48.160000000000004
+***DESPERADOS 4 BEERS,promotion_adjustment,2,-1.92
+***DESPERADOS BOTTLE,promotion_adjustment,1,-0.56
+***Fun Time Cho/Str/Ban,promotion_adjustment,264,-50.150000000000006
+***HEINEKEN ,promotion_adjustment,16,-8.28
+***HEINEKEN 330 ML,promotion_adjustment,2,-1.12
+***HEINEKEN SMALL BOTTLE,promotion_adjustment,36,-5.36
+***Heineken 00%NRB,promotion_adjustment,9,-8.1
+"***INCH""S",promotion_adjustment,1,-0.46
+***JACK'S POPCORN ,promotion_adjustment,10,-2.75
+***JACKDANIELS CAN,promotion_adjustment,4,-1.92
+***JD COLA 2 FOR 5.50£,promotion_adjustment,5,-2.4
+***KARPACKIE BERS,promotion_adjustment,4,-2.24
+***KESTREL ,promotion_adjustment,7,-0.42
+***Lays Crips ,promotion_adjustment,115,-67.86
+***ORANJEBOOM BEERS,promotion_adjustment,15,-15.36
+***PEPERAMI ,promotion_adjustment,228,-124.66
+***PERLA GREEN 4,promotion_adjustment,170,-121.68
+***SANMIGUEL 500ML STRONG ,promotion_adjustment,2,-2.2800000000000002
+***SPCIAL BREW,promotion_adjustment,31,-1.8599999999999999
+***STRONGBOW DARK 4 FOR 7.50,promotion_adjustment,33,-18.86
+***SUN EXOTIC JUICE 2 FOR 2£,promotion_adjustment,17,-8.5
+***Smoll Bottle Beer,promotion_adjustment,298,-233.2
+***TIMISOREANA,promotion_adjustment,2,-0.52
+***Vapes,promotion_adjustment,332,-702.47
+***Vipes,promotion_adjustment,99,-240.79
+***WARKA 4 FOR 6.00£,promotion_adjustment,28,-16.72
+***ZYWEC 4 BEER,promotion_adjustment,9,-6.36
+*Voucher - £1.75,voucher,1,-1.75
+*Voucher - £2.29,voucher,1,-2.29
+*Voucher - £6.04,voucher,1,-6.04
+-Card Charges,other_unknown_department,7,0.0
+-Cash Back,other_unknown_department,6,52.489999999999995
+-PAYOUT - AYAPA,supplier_payout,8,-493.14
+-PAYOUT - BOBBYS,supplier_payout,13,-654.8
+-PAYOUT - CARDS CONNECTION,supplier_payout,3,-194.18
+-PAYOUT - GJ SNACKS,supplier_payout,1,-38.0
+-PAYOUT - NVEE JUCCE,supplier_payout,1,-155.52
+-PAYOUT - SRI,supplier_payout,4,-100.0
+-PAYOUT - TEREA PHILIP MORRIS TOBACCO,supplier_payout,2,-322.11

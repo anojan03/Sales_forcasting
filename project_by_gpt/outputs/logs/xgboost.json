@@ -1,0 +1,146 @@
+{
+  "trials": [
+    {
+      "model": "XGBoost_Without_Payday",
+      "max_depth": 3,
+      "n": 1359,
+      "MAE": 27.010575824622464,
+      "RMSE": 38.080215748800754
+    },
+    {
+      "model": "XGBoost_With_Payday",
+      "max_depth": 3,
+      "n": 1359,
+      "MAE": 27.08091841960848,
+      "RMSE": 38.05766981505392
+    },
+    {
+      "model": "XGBoost_Without_Payday",
+      "max_depth": 5,
+      "n": 1359,
+      "MAE": 26.93730721336853,
+      "RMSE": 38.21468403309359
+    },
+    {
+      "model": "XGBoost_With_Payday",
+      "max_depth": 5,
+      "n": 1359,
+      "MAE": 26.53718488194295,
+      "RMSE": 38.041422986323006
+    }
+  ],
+  "chosen_max_depth": 3,
+  "selection": "mean validation RMSE of paired variants; no test tuning",
+  "settings": {
+    "max_depth_candidates": [
+      3,
+      5
+    ],
+    "n_estimators": 300,
+    "learning_rate": 0.03,
+    "min_child_weight": 5,
+    "subsample": 1.0,
+    "colsample_bytree": 1.0,
+    "n_jobs": 2,
+    "shap_max_rows": 500
+  },
+  "selected_model_parameters": {
+    "objective": "reg:squarederror",
+    "base_score": null,
+    "booster": null,
+    "callbacks": null,
+    "colsample_bylevel": null,
+    "colsample_bynode": null,
+    "colsample_bytree": 1.0,
+    "device": null,
+    "early_stopping_rounds": null,
+    "enable_categorical": false,
+    "eval_metric": null,
+    "feature_types": null,
+    "feature_weights": null,
+    "gamma": null,
+    "grow_policy": null,
+    "importance_type": null,
+    "interaction_constraints": null,
+    "learning_rate": 0.03,
+    "max_bin": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "max_delta_step": null,
+    "max_depth": 3,
+    "max_leaves": null,
+    "min_child_weight": 5,
+    "missing": NaN,
+    "monotone_constraints": null,
+    "multi_strategy": null,
+    "n_estimators": 300,
+    "n_jobs": 2,
+    "num_parallel_tree": null,
+    "random_state": 42,
+    "reg_alpha": null,
+    "reg_lambda": null,
+    "sampling_method": null,
+    "scale_pos_weight": null,
+    "subsample": 1.0,
+    "tree_method": "hist",
+    "validate_parameters": null,
+    "verbosity": null
+  },
+  "shap": {
+    "XGBoost_Without_Payday": {
+      "n": 500,
+      "max_additivity_error": 7.62939453125e-05,
+      "method": "Tree SHAP tree_path_dependent",
+      "top_features": [
+        {
+          "feature": "trend_days",
+          "mean_absolute_shap": 6.213189125061035
+        },
+        {
+          "feature": "hour_sin",
+          "mean_absolute_shap": 6.030770301818848
+        },
+        {
+          "feature": "lag_168",
+          "mean_absolute_shap": 4.158019065856934
+        },
+        {
+          "feature": "hour_cos",
+          "mean_absolute_shap": 3.5748343467712402
+        },
+        {
+          "feature": "rolling_24_mean",
+          "mean_absolute_shap": 2.9134747982025146
+        }
+      ]
+    },
+    "XGBoost_With_Payday": {
+      "n": 500,
+      "max_additivity_error": 6.866455078125e-05,
+      "method": "Tree SHAP tree_path_dependent",
+      "top_features": [
+        {
+          "feature": "trend_days",
+          "mean_absolute_shap": 6.593031883239746
+        },
+        {
+          "feature": "hour_sin",
+          "mean_absolute_shap": 5.940682888031006
+        },
+        {
+          "feature": "lag_168",
+          "mean_absolute_shap": 3.9747915267944336
+        },
+        {
+          "feature": "hour_cos",
+          "mean_absolute_shap": 3.61150860786438
+        },
+        {
+          "feature": "rolling_24_mean",
+          "mean_absolute_shap": 3.200402021408081
+        }
+      ]
+    }
+  },
+  "elapsed_seconds": 8.15295124053955
+}

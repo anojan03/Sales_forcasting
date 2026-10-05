@@ -1,0 +1,449 @@
+# Hourly convenience store sales forecasting
+
+Research report on Prophet, XGBoost and LSTM with a configurable calendar payday proxy. Fresh experiments use net retail sales and a chronological holdout. All numerical tables and figures below derive from saved execution outputs.
+
+## Research aim and principal findings
+
+The study asks whether a calendar proxy for payday improves one-hour-ahead sales forecasts at a small independent convenience store. The common test contains 1,622 observed hours, including 325 payday-proxy and 1,297 non-proxy hours. The lowest test RMSE across the six main variants is XGBoost With Payday at GBP 49.746; the lowest RMSE including baselines is XGBoost With Payday at GBP 49.746. These rankings apply to this holdout and recorded hours only.
+
+For Prophet, adding the payday indicator changes MAE by GBP +0.062 (+0.15%) and RMSE by GBP +0.092 (+0.15%). A negative change denotes improvement. The indicators describe calendar association, not customers' observed paydays or a causal effect.
+
+For XGBoost, adding the payday indicator changes MAE by GBP -0.009 (-0.03%) and RMSE by GBP -0.087 (-0.18%). A negative change denotes improvement. The indicators describe calendar association, not customers' observed paydays or a causal effect.
+
+For LSTM, adding the payday indicator changes MAE by GBP +0.296 (+0.85%) and RMSE by GBP +0.486 (+0.91%). A negative change denotes improvement. The indicators describe calendar association, not customers' observed paydays or a causal effect.
+
+## Data sources and provenance
+
+Five supplied source CSVs and one additional prediction export were audited. No datasets were concatenated. All sources remain unchanged, and SHA256 hashes are stored in outputs/audit/dataset_audit.json. Store identity, extraction software, completeness guarantees and tax basis are not established by the CSVs. Currency is interpreted as GBP from the research context.
+
+| Source | Rows | Total GBP | Negative rows |
+| --- | --- | --- | --- |
+| clean version for modelling.csv | 134866 | 457238.050 | 0 |
+| Daily sales by department.csv | 8131 | 457238.050 | 0 |
+| Final Model Comparison.csv | 341 | 21638.400 | 0 |
+| Hourly sales by department.csv | 49816 | 457238.050 | 0 |
+| Hourly total-sales dataset.csv | 8616 | 457238.050 | 0 |
+| Master transaction-level research dataset.csv | 139919 | 449798.170 | 5053 |
+
+The master transaction file contains 139,919 line items across receipts, rather than 139,919 distinct transactions. Transaction_ID repeats within receipts and must not be a deduplication key. No exact full-row duplicates occur in the master. The cleaned headerless file contains 134,866 records and 53 repeated projections; a multiset check confirms that it exactly matches the nonnegative master lines on receipt, timestamp, product, quantity, unit price and line total. Repeated product lines are retained.
+
+The hourly total file contains 8,616 distinct hour starts; hourly departments contain 49,816 department-hour records; daily departments contain 8,131 department-day records. Their GBP 457,238.05 totals and timestamp-level reconciliation identify them as overlapping positive-sales aggregates. The maximum reconciliation discrepancy is below GBP 0.000000000001. Their Transaction_Count should be interpreted as exported row counts until receipt-count semantics are established.
+
+All source date ranges begin on 19 December 2024 and end on 15 July 2026. Transaction timestamps include millisecond precision, such as YYYY-MM-DD HH:MM:SS.sss; hourly exports append .000 and daily exports use YYYY-MM-DD. No invalid source timestamps were found. The cleaned file has no header: its 16 field meanings were inferred by matching the master, while its calendar fields are not used for modelling.
+
+Final_Model_Comparison.csv is a prior rounded prediction export with 341 rows between 29 March 2026 20:00 and 14 July 2026 21:00 and a 255/86 non-payday/payday partition. Its actuals match positive hourly aggregates, but its training periods, feature definitions and forecast alignment are unknown. It is excluded from fitting, tuning and the new performance comparison. These experiments do not reproduce those models or force their sample counts.
+
+## Audit and cleaning decisions
+
+| record class | rows | sales | negatives |
+| --- | --- | --- | --- |
+| other unknown department | 13 | 52.490 | 0 |
+| product sale | 134853 | 457185.560 | 0 |
+| promotion adjustment | 4917 | -3775.800 | 4917 |
+| refund | 101 | -1696.250 | 101 |
+| supplier payout | 32 | -1957.750 | 32 |
+| voucher | 3 | -10.080 | 3 |
+
+Net retail revenue is the signed sum of Line_Total, excluding 32 explicitly labelled -PAYOUT supplier entries totalling GBP -1,957.75. Retained classes include 4,917 promotion adjustment lines (GBP -3,775.80), 101 refunds (GBP -1,696.25), three negative voucher lines (GBP -10.08), and 13 other records with department ID zero (GBP 52.49). Promotion totals are already represented by negative line entries: the receipt-level Promotion field is not subtracted again. Quantity multiplied by Unit_Price matches Line_Total within floating-point tolerance, supporting use of the line amount.
+
+The full extracted net retail total after excluding payouts is GBP 451,755.92; the modelling period totals GBP 448,867.70. Accounting treatment of vouchers is an explicit interpretation of the labels; timezone and GBP are assumptions rather than merchant-confirmed metadata. These assumptions are configurable and should be checked against the shop's accounting and till documentation before operational use.
+
+Master Department_ID has no nulls, but zero is an unknown or adjustment code for 4,965 rows. Department_Name is missing on 4,965 master rows and on a small number of aggregated department records. Missing barcodes are not missing sales. Master has 11,610 missing barcodes; clean has 6,632 and 13 missing department names. No imputation of product identity or deletion by department was needed for total-shop aggregation. Complete column-wise missing counts and dtypes are in the machine-readable audit.
+
+No outlier trimming, winsorisation or removal of small positive sales was performed. The sparse December startup period is excluded by a fixed analysis start of 1 January 2025; it may include setup transactions, but this is unconfirmed. The entire final extraction date, 15 July 2026, is excluded because recording stops at 16:27 and it may be incomplete. No other observed hour is removed for low or negative sales.
+
+## Clock hours missingness and daylight saving
+
+Timestamps are treated as Europe/London wall time and converted to UTC before hourly aggregation. Localization fails on ambiguous or nonexistent local times rather than guessing. The selected grid contains 13,439 elapsed clock hours; 4,920 have no retained observations and remain missing. There are 0 observed zero-total hours and 3 observed negative-total hours. A negative net hour can arise from refunds and is retained.
+
+A missing record could mean closure, no transactions, an extraction gap or downtime. The exports alone cannot distinguish these explanations. Nighttime sparsity is compatible with closure but does not prove a trading calendar. No missing targets are set to zero. Metrics condition on hours with recorded retained lines; zero-transaction trading hours may therefore be underrepresented. This is a material limitation of the estimand.
+
+Calendar features use local shop time, while each LSTM step and lag offset uses one elapsed UTC hour. The spring clock change makes the validation grid 2,159 hours rather than 2,160. Lags of 24 and 168 elapsed hours may differ from the same local hour across a DST change. This convention is explicit; the April-to-July test contains no clock change.
+
+## Exploratory analysis
+
+Observed monthly net sales vary from GBP 12,230.01 to GBP 39,535.64 in the selected period; the minimum and maximum include the partial July endpoint if applicable. Monthly comparisons mix trading-day counts, coverage and demand, so they do not isolate customer spending effects. Increasing late-period sales can produce drift relative to a model fitted on 2025.
+
+![Figure 1. Observed monthly net sales and local-hour recording coverage. Missing hours are not assigned zero.](../outputs/charts/exploratory.png)
+
+Figure 1. Observed monthly net sales and local-hour recording coverage. Missing hours are not assigned zero.
+
+## Payday proxy and forecasting task
+
+The proxy is 1 on the last three calendar days of each month and the first three days of the next month, otherwise 0. A symmetric six-day boundary window allows exploratory association with monthly payroll arriving near month end and spending spilling into the next month. The exact width is a pragmatic hypothesis fixed before model evaluation, not an empirically established payroll rule. No weekend, bank-holiday or business-day payday adjustment is applied. Weekly wages, benefits, customer-specific pay cycles and actual income receipts are not observed.
+
+Forecasts are issued at the start of clock hour t for net sales during [t,t+1 hour). The operational assumption is that all recorded sales from completed earlier hours have been finalized and are available at that origin. Validation and test observations may update lag or sequence inputs only after their hours complete. Weights, imputers and scalers remain fixed from training. This is rolling one-hour-ahead evaluation, not a multi-hour recursive forecast issued at the beginning of the whole test period. All families have the same information cutoff, although their inductive structures differ.
+
+## Chronological design and feature preparation
+
+| split | clock hours | observed hours | sales | eligible forecast hours |
+| --- | --- | --- | --- | --- |
+| test | 2520 | 1622 | 115017.960 | 1622 |
+| train | 8760 | 5538 | 265411.680 | 5526 |
+| validation | 2159 | 1359 | 68438.060 | 1359 |
+
+Training targets run from 1 January through 31 December 2025. Validation targets run from 1 January through 31 March 2026. Test targets run from 1 April through 14 July 2026, with boundary dates interpreted locally. The first 24 grid hours cannot construct a complete LSTM time window and are excluded consistently from training and evaluation for all algorithms. No time-series samples are randomly shuffled, and no fitting uses test targets. Validation is used for small candidate grids and LSTM early stopping only; final models are not refitted on validation.
+
+Tabular predictors comprise local hour, weekday and month sine/cosine pairs; weekend flag; elapsed-day trend; past sales at 1, 24 and 168 hours; missing indicators for those lags; and the mean and count of recorded sales in the previous 24 clock hours. All historical features shift before rolling. Missing tabular predictors use medians learned from eligible training rows only. Missing lag indicators and rolling counts make the information gaps visible. Current transaction count, quantity, promotions and department totals are excluded because they would be unavailable at hour start.
+
+Each family chooses one shared hyperparameter candidate by averaging the two variants' validation RMSE. This controls the paired payday comparison: both variants use the same chosen structural setting, source data, cutoffs and seed. LSTM early stopping may select different epochs because each variant has its own validation loss. Each pair has the same non-payday inputs; only the proxy column is added. Cross-family differences in representation are reported rather than hidden.
+
+## Model architectures and selected settings
+
+Prophet uses an additive piecewise linear trend, daily Fourier order 6 and weekly Fourier order 3, with yearly seasonality disabled because training covers only one year. Candidates for changepoint prior scale are [0.01, 0.05]; validation selected 0.05. Past-sales features, missingness, monthly cyclic terms and weekend are additive regressors with prior scale 0.5. Duplicate hour/weekday harmonics and the explicit trend column are omitted from Prophet regressors because Prophet already supplies those structures. Internal regressor standardization learns from training. Uncertainty simulation is disabled; forecasts are point estimates.
+
+XGBoost uses squared-error histogram gradient boosting, 300 trees, learning rate 0.03, min_child_weight 5, full row and column sampling and two CPU threads. Depth candidates [3, 5] give selected depth 3. All tabular predictors are included. Tree count is fixed and selected depth uses only validation.
+
+LSTM encodes the previous 24 elapsed clock hours. At each step it receives standardized sales, an observation flag and known calendar predictors; the payday variant also receives the historical proxy. A second input provides the target-hour calendar and, for the payday variant, its proxy. One LSTM layer with selected 32 units feeds a 16-unit ReLU dense layer and a linear output. Candidates are [16, 32] units. Adam learning rate is 0.001, batch size 64, maximum 25 epochs, patience 4. Model training uses shuffle=False and restored best validation weights.
+
+The LSTM target scaler learns the mean and standard deviation of observed eligible training sales only. Missing historical sales are represented by the training mean (scaled value zero) together with observed=0; this is a modelling imputation and does not create zero-sales targets. True standardized zero with observed=1 means an observed value equal to the training mean. All 24 steps remain on the time grid even overnight. Predictions inverse-transform the single target channel to GBP, never a feature matrix.
+
+### Prophet validation candidates
+
+| model | changepoint prior scale | n | MAE | RMSE |
+| --- | --- | --- | --- | --- |
+| Prophet Without Payday | 0.010 | 1359 | 28.283 | 38.385 |
+| Prophet With Payday | 0.010 | 1359 | 28.113 | 38.292 |
+| Prophet Without Payday | 0.050 | 1359 | 25.077 | 37.523 |
+| Prophet With Payday | 0.050 | 1359 | 25.100 | 37.600 |
+
+### XGBoost validation candidates
+
+| model | max depth | n | MAE | RMSE |
+| --- | --- | --- | --- | --- |
+| XGBoost Without Payday | 3 | 1359 | 27.011 | 38.080 |
+| XGBoost With Payday | 3 | 1359 | 27.081 | 38.058 |
+| XGBoost Without Payday | 5 | 1359 | 26.937 | 38.215 |
+| XGBoost With Payday | 5 | 1359 | 26.537 | 38.041 |
+
+### LSTM validation candidates
+
+| model | units | epochs run | best epoch | n | MAE | RMSE |
+| --- | --- | --- | --- | --- | --- | --- |
+| LSTM Without Payday | 16 | 22 | 18 | 1359 | 26.622 | 38.701 |
+| LSTM With Payday | 16 | 7 | 3 | 1359 | 26.951 | 39.703 |
+| LSTM Without Payday | 32 | 8 | 4 | 1359 | 26.310 | 38.288 |
+| LSTM With Payday | 32 | 8 | 4 | 1359 | 26.276 | 38.286 |
+
+Naive, daily seasonal-naive and weekly seasonal-naive baselines use sales from t-1, t-24 and t-168 elapsed hours respectively. If the corresponding historical hour is unrecorded, they use the eligible training median and report fallback counts. They use the same forecast origins and test targets as the main models. Baselines do not use payday features.
+
+## Prediction validation and error measures
+
+Each saved forecast contains UTC timestamp, offset-labelled local timestamp, actual net sales, predicted sales, model variant and proxy indicator. Full-precision CSV serialization uses 17 significant digits. Before joining, the comparison validates unique ordered timestamps, finite values, test membership, labels, identical proxy values and actual-sales agreement at rtol=1e-10 and atol=1e-8. It also checks prepared-data SHA256 and configuration provenance. Common dates run from 2026-04-01 06:00:00+00:00 to 2026-07-14 20:00:00+00:00; every eligible observed test hour is shared by the six variants.
+
+MAE is the mean absolute forecast error; RMSE is the square root of mean squared error. Both are in GBP per recorded hour and use unrounded predictions and actuals. RMSE places greater weight on large errors. Change equals error with payday minus error without payday; percentage change divides by the without-payday error. No percentage accuracy or MAPE is used because net sales can be near zero or negative. Tables round only presentation values.
+
+## Common test results
+
+| model | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| Prophet Without Payday | 1622 | 41.366 | 61.701 |
+| Prophet With Payday | 1622 | 41.428 | 61.792 |
+| XGBoost Without Payday | 1622 | 32.599 | 49.833 |
+| XGBoost With Payday | 1622 | 32.590 | 49.746 |
+| LSTM Without Payday | 1622 | 34.834 | 53.405 |
+| LSTM With Payday | 1622 | 35.130 | 53.892 |
+| Naive | 1622 | 42.161 | 64.051 |
+| Daily Seasonal Naive | 1622 | 42.721 | 64.592 |
+| Weekly Seasonal Naive | 1622 | 39.313 | 61.607 |
+
+![Figure 2. MAE and RMSE across all main variants and baselines on the identical observed test hours.](../outputs/charts/error_comparison.png)
+
+Figure 2. MAE and RMSE across all main variants and baselines on the identical observed test hours.
+
+## Payday and non payday test results
+
+### Payday
+
+| model | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| Prophet Without Payday | 325 | 42.194 | 58.121 |
+| Prophet With Payday | 325 | 41.460 | 57.387 |
+| XGBoost Without Payday | 325 | 31.561 | 44.755 |
+| XGBoost With Payday | 325 | 31.519 | 44.645 |
+| LSTM Without Payday | 325 | 34.755 | 48.971 |
+| LSTM With Payday | 325 | 34.637 | 48.813 |
+| Naive | 325 | 42.322 | 58.431 |
+| Daily Seasonal Naive | 325 | 42.534 | 59.996 |
+| Weekly Seasonal Naive | 325 | 39.783 | 57.499 |
+
+### Non payday
+
+| model | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| Prophet Without Payday | 1297 | 41.159 | 62.565 |
+| Prophet With Payday | 1297 | 41.420 | 62.848 |
+| XGBoost Without Payday | 1297 | 32.859 | 51.027 |
+| XGBoost With Payday | 1297 | 32.859 | 50.944 |
+| LSTM Without Payday | 1297 | 34.854 | 54.460 |
+| LSTM With Payday | 1297 | 35.254 | 55.091 |
+| Naive | 1297 | 42.121 | 65.384 |
+| Daily Seasonal Naive | 1297 | 42.768 | 65.693 |
+| Weekly Seasonal Naive | 1297 | 39.195 | 62.595 |
+
+## Change after adding the payday proxy
+
+| family | group | n | MAE delta GBP | MAE delta % | RMSE delta GBP | RMSE delta % |
+| --- | --- | --- | --- | --- | --- | --- |
+| Prophet | all | 1622 | 0.062 | 0.149 | 0.092 | 0.149 |
+| Prophet | payday | 325 | -0.734 | -1.739 | -0.734 | -1.263 |
+| Prophet | non payday | 1297 | 0.261 | 0.634 | 0.282 | 0.451 |
+| XGBoost | all | 1622 | -0.009 | -0.027 | -0.087 | -0.175 |
+| XGBoost | payday | 325 | -0.042 | -0.132 | -0.110 | -0.245 |
+| XGBoost | non payday | 1297 | -0.001 | -0.002 | -0.083 | -0.162 |
+| LSTM | all | 1622 | 0.296 | 0.850 | 0.486 | 0.910 |
+| LSTM | payday | 325 | -0.118 | -0.340 | -0.158 | -0.323 |
+| LSTM | non payday | 1297 | 0.400 | 1.148 | 0.631 | 1.159 |
+
+![Figure 3. Paired error changes over all common test hours. Negative bars indicate improvement and positive bars indicate deterioration.](../outputs/charts/payday_effect.png)
+
+Figure 3. Paired error changes over all common test hours. Negative bars indicate improvement and positive bars indicate deterioration.
+
+## Full test coverage and baseline fallbacks
+
+| model | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| Prophet Without Payday | 1622 | 41.366 | 61.701 |
+| Prophet With Payday | 1622 | 41.428 | 61.792 |
+| XGBoost Without Payday | 1622 | 32.599 | 49.833 |
+| XGBoost With Payday | 1622 | 32.590 | 49.746 |
+| LSTM Without Payday | 1622 | 34.834 | 53.405 |
+| LSTM With Payday | 1622 | 35.130 | 53.892 |
+| Naive | 1622 | 42.161 | 64.051 |
+| Daily Seasonal Naive | 1622 | 42.721 | 64.592 |
+| Weekly Seasonal Naive | 1622 | 39.313 | 61.607 |
+
+All full-test sample sizes equal the common sample in this execution. The separately saved full-test rows remain useful if later variants have different coverage; the comparison does not infer equal tasks merely from timestamp overlap. Model-specific segment metrics and UTC evaluation start/end dates are saved in outputs/metrics/model_metrics.csv. Exact per-hour local dates are in the predictions.
+
+| model | fallback hours | fallback value |
+| --- | --- | --- |
+| Naive | 106 | 42.025 |
+| Daily Seasonal Naive | 38 | 42.025 |
+| Weekly Seasonal Naive | 23 | 42.025 |
+
+## Forecast and residual diagnostics
+
+![Figure 4. First seven test days. Points show recorded hours without drawing lines across unknown overnight sales.](../outputs/charts/actual_vs_predicted.png)
+
+Figure 4. First seven test days. Points show recorded hours without drawing lines across unknown overnight sales.
+
+Residuals are predicted minus actual net sales. Large negative residuals indicate underprediction. The scatter plots assess whether error magnitude changes with sales level; daily mean residuals reveal sustained bias or drift. They are descriptive diagnostics, not proof of independent errors or calibrated probabilistic uncertainty.
+
+| model | mean residual | lag1 clock hour correlation | negative predictions |
+| --- | --- | --- | --- |
+| Prophet Without Payday | -36.201 | 0.182 | 25 |
+| Prophet With Payday | -36.290 | 0.185 | 26 |
+| XGBoost Without Payday | -10.675 | 0.108 | 0 |
+| XGBoost With Payday | -9.977 | 0.116 | 0 |
+| LSTM Without Payday | -17.333 | 0.177 | 0 |
+| LSTM With Payday | -18.520 | 0.181 | 0 |
+
+The mean eligible training target is GBP 47.993, compared with GBP 70.911 in the test period. All six models have negative mean residuals in this holdout, indicating systematic underprediction. The residual plots show especially large underprediction for high-sales hours and sustained late-test negative bias. This is compatible with distribution drift and regression toward typical training sales, but cannot identify a causal explanation. The lag-one correlations pair only adjacent elapsed clock hours with recorded residuals; gaps are not treated as adjacent samples.
+
+![Figure 5. Residual versus actual net sales for each main model variant.](../outputs/charts/residuals.png)
+
+Figure 5. Residual versus actual net sales for each main model variant.
+
+![Figure 6. Daily mean residuals across the test period; each daily mean covers recorded hours only.](../outputs/charts/residual_time.png)
+
+Figure 6. Daily mean residuals across the test period; each daily mean covers recorded hours only.
+
+## XGBoost SHAP analysis
+
+Tree SHAP explains fitted XGBoost predictions using the tree_path_dependent convention. Explanations use up to 500 evenly spaced common test hours after model selection. The implementation verifies that base value plus the sum of contributions reconstructs predictions within GBP 0.01. Contributions are in GBP, and the reported mean absolute contributions summarize influence in this sample. Correlated lag, calendar and payday features can share attribution; rankings depend on the fitted model and explanation convention.
+
+XGBoost Without Payday: the three largest mean absolute SHAP contributors are trend_days, hour_sin, lag_168.
+
+| feature | mean absolute shap |
+| --- | --- |
+| trend days | 6.213 |
+| hour sin | 6.031 |
+| lag 168 | 4.158 |
+| hour cos | 3.575 |
+| rolling 24 mean | 2.913 |
+| dow cos | 2.543 |
+| month sin | 2.207 |
+| lag 24 | 1.846 |
+
+![Figure 7. XGBoost Without Payday Tree SHAP on recorded test hours.](../outputs/charts/XGBoost_Without_Payday_shap.png)
+
+Figure 7. XGBoost Without Payday Tree SHAP on recorded test hours.
+
+XGBoost With Payday: the three largest mean absolute SHAP contributors are trend_days, hour_sin, lag_168.
+
+The payday indicator has mean absolute contribution GBP 0.059 and rank 13 of 17 predictors. Attribution does not establish a causal payday response or prove out-of-sample usefulness; the paired holdout errors provide the predictive comparison.
+
+| feature | mean absolute shap |
+| --- | --- |
+| trend days | 6.593 |
+| hour sin | 5.941 |
+| lag 168 | 3.975 |
+| hour cos | 3.612 |
+| rolling 24 mean | 3.200 |
+| dow cos | 2.542 |
+| month sin | 2.258 |
+| lag 24 | 1.841 |
+
+![Figure 8. XGBoost With Payday Tree SHAP on recorded test hours.](../outputs/charts/XGBoost_With_Payday_shap.png)
+
+Figure 8. XGBoost With Payday Tree SHAP on recorded test hours.
+
+## Reproducibility and execution evidence
+
+Execution uses Python 3.11.0 on Windows-10-10.0.19045-SP0, seed 42, fixed chronological masks, train-only learned transformations and CPU thread limits. TensorFlow deterministic operations are enabled and oneDNN custom optimizations are disabled. Exact package versions, candidate scores, training histories, trained artifacts and prediction provenance are saved. Bitwise equality across different hardware or numerical libraries is not guaranteed.
+
+| Package | Version |
+| --- | --- |
+| numpy | 2.4.6 |
+| pandas | 3.0.6 |
+| scikit-learn | 1.9.1 |
+| prophet | 1.4.0 |
+| cmdstanpy | 1.3.0 |
+| xgboost | 3.2.0 |
+| shap | 0.51.0 |
+| tensorflow cpu | 2.21.0 |
+| keras | 3.15.1 |
+| matplotlib | 3.11.2 |
+| joblib | 1.6.0 |
+
+Executed verification checks: every grid step is one elapsed hour; target and future sales mutation cannot change origin features; imputer statistics equal training only medians; lstm train only scaler and inverse roundtrip; source csv hashes unchanged; all six cover identical expected test hours. The causality check replaces target and future observations at representative origins in each split and confirms that origin predictors are unchanged. The LSTM inverse-transform roundtrip and training-only imputer statistics are checked explicitly.
+
+A second complete execution compared the saved main-model forecasts with the first execution. Timestamps and actual sales were identical for all six variants; the maximum absolute prediction difference across variants was GBP 0. This supports numerical reproducibility in the same environment, without establishing portability to other machines.
+
+## Limitations privacy and conclusions
+
+The evidence covers one store, one temporal holdout and observed sales-bearing or adjustment-bearing hours. Unknown trading hours, recording gaps, setup records, supplier accounting, voucher treatment, timezone and tax metadata limit external validity. No actual customer payday data, weather, local events, stock availability or prospective promotion schedule were available. Late-period demand shifts can disadvantage frozen training weights. Candidate grids and single-seed LSTM runs are intentionally modest; family rankings may change with broader validation or repeated seeds.
+
+No inferential hypothesis test or statistical significance claim is included. Hourly forecast errors can be serially dependent, and payday windows repeat in clusters. A future comparison could use paired date-level loss differences with a block bootstrap and sensitivity to block length, after checking approximate stability; abrupt drift and a small number of payday cycles would still limit inference. Ordinary independent-sample tests on these hourly errors would be inappropriate.
+
+The transaction export includes timestamps, product descriptions, barcodes, receipt IDs, payment-type codes and a Customer_ID field. Even small integer identifiers should not be presumed anonymous. Products and detailed purchase timing can enable indirect identification when linked to other information. Research sharing should exclude raw customer and receipt identifiers, restrict access to originals, publish aggregated outputs, document consent or other lawful basis with the institution, and apply a retention policy. Reports and model features here omit customer identifiers; source files remain locally preserved. Small hourly aggregates and trained models can still reveal business-sensitive patterns, so they should not be published without store authorization.
+
+For this defined task, XGBoost With Payday gives the lowest main-model RMSE. The numerical payday changes above determine whether the proxy helped each family; predictive gain should not be generalized to customer income causality. Completed outputs include the five-source audit, six trained variants, three baselines, validation selection, aligned full-precision test predictions, subgroup errors, Tree SHAP and descriptive charts. Merchant-confirmed opening hours and metadata, additional temporal folds, payday-window sensitivity, broader tuning and prospective monitoring remain future work.
+
+## Method documentation references
+
+References below are primary software documentation consulted for method implementation, not sources for the store-specific empirical results. Accessed 2 October 2026. The six-day payday window is an explicit research assumption and is not attributed to these sources.
+
+Prophet additive regressors and seasonality: https://facebook.github.io/prophet/docs/seasonality,_holiday_effects,_and_regressors.html
+
+XGBoost parameter documentation: https://xgboost.readthedocs.io/en/stable/parameter.html
+
+TensorFlow LSTM layer documentation: https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM
+
+SHAP TreeExplainer documentation: https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html
+
+Scikit learn data leakage guidance: https://scikit-learn.org/stable/common_pitfalls.html#data-leakage
+
+## Appendix source schema and detailed audit
+
+### clean version for modelling
+
+Role: transaction lines. Timestamp column: Transaction_Time. Coverage: 2024-12-19 16:05:20.423000 to 2026-07-15 16:27:50.820000. Exact row duplicates: 53. Timestamp repetitions: 68406; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Transaction ID | int64 | 0 |
+| Transaction Time | str | 0 |
+| Sale Day | str | 0 |
+| Sale Hour | int64 | 0 |
+| Day Name | str | 0 |
+| Day Number | int64 | 0 |
+| Month | int64 | 0 |
+| Year | int64 | 0 |
+| Product ID | int64 | 0 |
+| Barcode | string | 6632 |
+| Product Name | str | 0 |
+| Department ID | int64 | 0 |
+| Department Name | str | 13 |
+| Quantity | float64 | 0 |
+| Unit Price | float64 | 0 |
+| Line Total | float64 | 0 |
+
+### Daily sales by department
+
+Role: aggregate. Timestamp column: Sale_Day. Coverage: 2024-12-19 00:00:00 to 2026-07-15 00:00:00. Exact row duplicates: 0. Timestamp repetitions: 7562; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Sale Day | str | 0 |
+| Department ID | int64 | 0 |
+| Department Name | str | 8 |
+| Transaction Count | int64 | 0 |
+| Total Quantity | float64 | 0 |
+| Department Daily Sales | float64 | 0 |
+
+### Final Model Comparison
+
+Role: prediction export excluded from experiments. Timestamp column: Hours_Start. Coverage: 2026-03-29 20:00:00 to 2026-07-14 21:00:00. Exact row duplicates: 0. Timestamp repetitions: 0; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Hours Start | str | 0 |
+| Actual Sales | float64 | 0 |
+| Prophet Without Payday | float64 | 0 |
+| Prophet With Payday | float64 | 0 |
+| XGBoost Without Payday | float64 | 0 |
+| XGBoost With Payday | float64 | 0 |
+| LSTM Without Payday | float64 | 0 |
+| LSTM With Payday | float64 | 0 |
+| Payday Window | int64 | 0 |
+
+### Hourly sales by department
+
+Role: aggregate. Timestamp column: Hour_Start. Coverage: 2024-12-19 16:00:00 to 2026-07-15 16:00:00. Exact row duplicates: 0. Timestamp repetitions: 41200; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Hour Start | str | 0 |
+| Sale Day | str | 0 |
+| Sale Hour | int64 | 0 |
+| Department ID | int64 | 0 |
+| Department Name | str | 8 |
+| Transaction Count | int64 | 0 |
+| Total Quantity | float64 | 0 |
+| Department Hourly Sales | float64 | 0 |
+
+### Hourly total-sales dataset
+
+Role: aggregate. Timestamp column: Hours_Start. Coverage: 2024-12-19 16:00:00 to 2026-07-15 16:00:00. Exact row duplicates: 0. Timestamp repetitions: 0; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Hours Start | str | 0 |
+| Sale Day | str | 0 |
+| Sale Hour | int64 | 0 |
+| Transaction Count | int64 | 0 |
+| Total Quantity | float64 | 0 |
+| Hourly Sales | float64 | 0 |
+
+### Master transaction-level research dataset
+
+Role: transaction lines. Timestamp column: Transaction_Time. Coverage: 2024-12-19 16:05:20.423000 to 2026-07-15 16:27:50.820000. Exact row duplicates: 0. Timestamp repetitions: 73371; repetition is legitimate for line items and department records, but is checked as an error for total-shop predictions.
+
+| Column | Type | Missing |
+| --- | --- | --- |
+| Transaction ID | int64 | 0 |
+| Transaction Time | str | 0 |
+| Transaction Date | str | 0 |
+| Time Only | str | 0 |
+| Till ID | int64 | 0 |
+| Line Number | int64 | 0 |
+| Product ID | int64 | 0 |
+| Barcode | string | 11610 |
+| Product Name | str | 0 |
+| Department ID | int64 | 0 |
+| Department Name | str | 4965 |
+| Quantity | float64 | 0 |
+| Unit Price | float64 | 0 |
+| Line Total | float64 | 0 |
+| VAT Code | float64 | 0 |
+| VAT Amount | float64 | 0 |
+| Discount | float64 | 0 |
+| Promotion | float64 | 0 |
+| Refund | int64 | 0 |
+| Payment Type | int64 | 0 |
+| Customer ID | int64 | 0 |
+
+## Appendix reproducible commands
+
+From project_by_gpt, create a Python 3.11 environment and install requirements.txt. Run python run_all.py for the full workflow. Independent commands are python src/data_preparation.py, python src/baselines.py, python src/prophet_model.py, python src/xgboost_model.py, python src/lstm_model.py, python src/model_comparison.py, python src/verify_workflow.py and python src/research_report.py. The comparison and reporting commands do not retrain models. Changing config requires re-preparing data and rerunning affected models; provenance validation rejects stale forecasts.

@@ -1,0 +1,17 @@
+feature,mean_absolute_shap
+trend_days,6.213189
+hour_sin,6.0307703
+lag_168,4.158019
+hour_cos,3.5748343
+rolling_24_mean,2.9134748
+dow_cos,2.5431895
+month_sin,2.2074208
+lag_24,1.8458041
+month_cos,0.83081746
+dow_sin,0.75117105
+lag_1,0.68377674
+rolling_24_count,0.6105361
+lag_1_missing,0.010344405
+weekend,0.0
+lag_24_missing,0.0
+lag_168_missing,0.0

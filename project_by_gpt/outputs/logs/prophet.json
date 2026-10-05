@@ -1,0 +1,45 @@
+{
+  "trials": [
+    {
+      "model": "Prophet_Without_Payday",
+      "changepoint_prior_scale": 0.01,
+      "n": 1359,
+      "MAE": 28.2828166922674,
+      "RMSE": 38.38528545207339
+    },
+    {
+      "model": "Prophet_With_Payday",
+      "changepoint_prior_scale": 0.01,
+      "n": 1359,
+      "MAE": 28.1128882800476,
+      "RMSE": 38.292275831961476
+    },
+    {
+      "model": "Prophet_Without_Payday",
+      "changepoint_prior_scale": 0.05,
+      "n": 1359,
+      "MAE": 25.077025487021665,
+      "RMSE": 37.522705546367796
+    },
+    {
+      "model": "Prophet_With_Payday",
+      "changepoint_prior_scale": 0.05,
+      "n": 1359,
+      "MAE": 25.10032117822652,
+      "RMSE": 37.59973906607189
+    }
+  ],
+  "chosen_changepoint_prior_scale": 0.05,
+  "selection": "mean validation RMSE of paired variants; no refit on validation",
+  "settings": {
+    "changepoint_prior_scale_candidates": [
+      0.01,
+      0.05
+    ],
+    "daily_fourier_order": 6,
+    "weekly_fourier_order": 3,
+    "yearly_seasonality": false,
+    "regressor_prior_scale": 0.5
+  },
+  "elapsed_seconds": 9.60042691230774
+}

@@ -1,0 +1,7 @@
+file,role,rows,start,end,exact_duplicates,total,negative_rows
+clean version for modelling.csv,transaction lines,134866,2024-12-19 16:05:20.423,2026-07-15 16:27:50.820,53,457238.05000000005,0
+Daily sales by department.csv,aggregate,8131,2024-12-19 00:00:00.000,2026-07-15 00:00:00.000,0,457238.05,0
+Final_Model_Comparison.csv,prediction export excluded from experiments,341,2026-03-29 20:00:00.000,2026-07-14 21:00:00.000,0,21638.4,0
+Hourly sales by department.csv,aggregate,49816,2024-12-19 16:00:00.000,2026-07-15 16:00:00.000,0,457238.05000000005,0
+Hourly total-sales dataset.csv,aggregate,8616,2024-12-19 16:00:00.000,2026-07-15 16:00:00.000,0,457238.05,0
+Master transaction-level research dataset.csv,transaction lines,139919,2024-12-19 16:05:20.423,2026-07-15 16:27:50.820,0,449798.17000000004,5053

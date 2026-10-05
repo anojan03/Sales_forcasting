@@ -1,0 +1,57 @@
+{
+  "trials": [
+    {
+      "model": "LSTM_Without_Payday",
+      "units": 16,
+      "epochs_run": 22,
+      "best_epoch": 18,
+      "n": 1359,
+      "MAE": 26.62192239616792,
+      "RMSE": 38.7009262356142
+    },
+    {
+      "model": "LSTM_With_Payday",
+      "units": 16,
+      "epochs_run": 7,
+      "best_epoch": 3,
+      "n": 1359,
+      "MAE": 26.951058992129024,
+      "RMSE": 39.70270273445969
+    },
+    {
+      "model": "LSTM_Without_Payday",
+      "units": 32,
+      "epochs_run": 8,
+      "best_epoch": 4,
+      "n": 1359,
+      "MAE": 26.31018406231496,
+      "RMSE": 38.288192220832016
+    },
+    {
+      "model": "LSTM_With_Payday",
+      "units": 32,
+      "epochs_run": 8,
+      "best_epoch": 4,
+      "n": 1359,
+      "MAE": 26.276152148888862,
+      "RMSE": 38.28586458056999
+    }
+  ],
+  "chosen_units": 32,
+  "selection": "mean paired validation RMSE; early stopping per variant on validation only",
+  "settings": {
+    "sequence_hours": 24,
+    "units_candidates": [
+      16,
+      32
+    ],
+    "max_epochs": 25,
+    "patience": 4,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "threads": 2
+  },
+  "scaler_mean": 47.99260586319218,
+  "scaler_scale": 34.89297972266183,
+  "elapsed_seconds": 91.25300478935242
+}

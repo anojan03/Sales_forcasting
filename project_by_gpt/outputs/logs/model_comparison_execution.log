@@ -1,0 +1,10 @@
+                 model    n       MAE      RMSE
+Prophet_Without_Payday 1622 41.366419 61.700588
+   Prophet_With_Payday 1622 41.428005 61.792281
+XGBoost_Without_Payday 1622 32.599063 49.833176
+   XGBoost_With_Payday 1622 32.590300 49.745788
+   LSTM_Without_Payday 1622 34.833971 53.405390
+      LSTM_With_Payday 1622 35.130128 53.891623
+                 Naive 1622 42.160894 64.051304
+  Daily_Seasonal_Naive 1622 42.721048 64.592024
+ Weekly_Seasonal_Naive 1622 39.312925 61.607453

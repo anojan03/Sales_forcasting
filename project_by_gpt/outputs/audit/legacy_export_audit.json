@@ -1,0 +1,12 @@
+{
+  "rows": 341,
+  "start": "2026-03-29 20:00:00",
+  "end": "2026-07-14 21:00:00",
+  "payday_counts": {
+    "0": 255,
+    "1": 86
+  },
+  "actual_vs_gross_max_abs_difference": 0.0,
+  "rounded_predictions": true,
+  "training_design_unknown": true
+}

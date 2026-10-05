@@ -1,0 +1,22 @@
+{
+  "excluded_classes": [
+    "supplier_payout"
+  ],
+  "excluded_summary": {
+    "size": {
+      "supplier_payout": 32
+    },
+    "sum": {
+      "supplier_payout": -1957.75
+    }
+  },
+  "net_source_total": 451755.92,
+  "selected_period_total": 448867.69999999995,
+  "unknown_hours": 4920,
+  "observed_zero_hours": 0,
+  "observed_negative_hours": 3,
+  "timezone": "Europe/London",
+  "dst_policy": "localize with errors on ambiguity/nonexistence; model grid in UTC; calendar in local time",
+  "duplicate_policy": "retain repeated line items; master exact duplicates zero; transaction ID is a receipt not a unique line",
+  "target": "net retail line totals excluding explicit supplier payouts; promotion field not subtracted again"
+}

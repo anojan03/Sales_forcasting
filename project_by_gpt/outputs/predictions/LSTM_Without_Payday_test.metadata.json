@@ -1,0 +1,88 @@
+{
+  "model": "LSTM_Without_Payday",
+  "split": "test",
+  "config": {
+    "decisions_resolved": true,
+    "assumptions": [
+      "Timestamps treated as Europe/London local shop time; CSV contains no timezone metadata",
+      "Negative voucher lines treated as retail discounts based on their names; three lines total -10.08 GBP",
+      "Explicit -PAYOUT supplier entries excluded from retail revenue",
+      "Unknown hours remain missing; no verified opening-hours calendar",
+      "December 2024 excluded as sparse startup period; final extraction day 15 July 2026 excluded as potentially incomplete",
+      "Line_Total assumed monetary GBP retail amount; tax basis not established from export"
+    ],
+    "source_file": "Master transaction-level research dataset.csv",
+    "audit_files": [
+      "clean version for modelling.csv",
+      "Daily sales by department.csv",
+      "Hourly sales by department.csv",
+      "Hourly total-sales dataset.csv",
+      "Master transaction-level research dataset.csv"
+    ],
+    "excluded_prediction_export": "Final_Model_Comparison.csv",
+    "timestamp_column": "Transaction_Time",
+    "target_column": "Line_Total",
+    "timezone": "Europe/London",
+    "exclude_record_classes": [
+      "supplier_payout"
+    ],
+    "analysis_start": "2025-01-01",
+    "validation_start": "2026-01-01",
+    "test_start": "2026-04-01",
+    "analysis_end_exclusive": "2026-07-15",
+    "forecast_horizon_hours": 1,
+    "forecast_origin": "start of target clock hour; all earlier completed observed hours available; fixed training weights",
+    "payday": {
+      "last_days": 3,
+      "first_days": 3,
+      "description": "Last three and first three calendar days; exploratory monthly payroll proxy, not observed customer payday"
+    },
+    "seed": 42,
+    "lags": [
+      1,
+      24,
+      168
+    ],
+    "prophet": {
+      "changepoint_prior_scale_candidates": [
+        0.01,
+        0.05
+      ],
+      "daily_fourier_order": 6,
+      "weekly_fourier_order": 3,
+      "yearly_seasonality": false,
+      "regressor_prior_scale": 0.5
+    },
+    "xgboost": {
+      "max_depth_candidates": [
+        3,
+        5
+      ],
+      "n_estimators": 300,
+      "learning_rate": 0.03,
+      "min_child_weight": 5,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "n_jobs": 2,
+      "shap_max_rows": 500
+    },
+    "lstm": {
+      "sequence_hours": 24,
+      "units_candidates": [
+        16,
+        32
+      ],
+      "max_epochs": 25,
+      "patience": 4,
+      "batch_size": 64,
+      "learning_rate": 0.001,
+      "threads": 2
+    }
+  },
+  "prepared_sha256": "fb11378de55ed18682a30008a6299c180c54b82cceb3c1b5566a98cbe60c0d21",
+  "forecast_horizon_hours": 1,
+  "forecast_origin": "start of target hour; observed prior hours available",
+  "train_observations": 5526,
+  "train_end": "2025-12-31 21:00:00+00:00",
+  "no_refit_on_validation": true
+}

@@ -1,0 +1,22 @@
+{
+  "word_renderer": "Microsoft Word 16.0 hidden read-only export; packaged LibreOffice renderer unavailable",
+  "pdf_renderer": "bundled Poppler",
+  "docx_rendered_pages": 16,
+  "pdf_pages": 16,
+  "all_pages_visually_reviewed": true,
+  "source_csv_copies_match_originals": true,
+  "artifacts": {
+    "research_report.docx": {
+      "bytes": 1236203,
+      "sha256": "ca674d186a9242f9ec60d637467a1dc89c70ae86974e0e524216b33c1acb05ba"
+    },
+    "research_report.md": {
+      "bytes": 34164,
+      "sha256": "0d6793d71f4ff6d46f5fa63cf47fa86daa025d71d3e4291cdf23436fcc34f2a4"
+    },
+    "research_report.pdf": {
+      "bytes": 1342741,
+      "sha256": "82563d02401aa5f922a2f64ef4846515906873b6e6063d76d100f790dfe3a38a"
+    }
+  }
+}

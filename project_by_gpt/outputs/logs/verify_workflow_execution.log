@@ -1,0 +1,8 @@
+{
+  "every_grid_step_is_one_elapsed_hour": true,
+  "target_and_future_sales_mutation_cannot_change_origin_features": true,
+  "imputer_statistics_equal_training_only_medians": true,
+  "lstm_train_only_scaler_and_inverse_roundtrip": true,
+  "source_csv_hashes_unchanged": true,
+  "all_six_cover_identical_expected_test_hours": true
+}

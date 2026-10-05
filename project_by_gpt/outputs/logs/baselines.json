@@ -1,0 +1,44 @@
+{
+  "Naive_validation": {
+    "n": 1359,
+    "MAE": 35.41501839587932,
+    "RMSE": 52.520302595931526,
+    "fallback_hours": 96,
+    "fallback_value": 42.025000000000006
+  },
+  "Naive_test": {
+    "n": 1622,
+    "MAE": 42.16089395807645,
+    "RMSE": 64.05130398902277,
+    "fallback_hours": 106,
+    "fallback_value": 42.025000000000006
+  },
+  "Daily_Seasonal_Naive_validation": {
+    "n": 1359,
+    "MAE": 35.87283664459161,
+    "RMSE": 51.460093932040984,
+    "fallback_hours": 45,
+    "fallback_value": 42.025000000000006
+  },
+  "Daily_Seasonal_Naive_test": {
+    "n": 1622,
+    "MAE": 42.721048088779284,
+    "RMSE": 64.59202419741816,
+    "fallback_hours": 38,
+    "fallback_value": 42.025000000000006
+  },
+  "Weekly_Seasonal_Naive_validation": {
+    "n": 1359,
+    "MAE": 35.54239514348786,
+    "RMSE": 51.725537128435555,
+    "fallback_hours": 39,
+    "fallback_value": 42.025000000000006
+  },
+  "Weekly_Seasonal_Naive_test": {
+    "n": 1622,
+    "MAE": 39.31292540073982,
+    "RMSE": 61.607453331772376,
+    "fallback_hours": 23,
+    "fallback_value": 42.025000000000006
+  }
+}

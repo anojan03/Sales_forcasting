@@ -1,0 +1,7 @@
+record_class,rows,sales,negatives
+other_unknown_department,13,52.489999999999995,0
+product_sale,134853,457185.56,0
+promotion_adjustment,4917,-3775.8,4917
+refund,101,-1696.25,101
+supplier_payout,32,-1957.75,32
+voucher,3,-10.08,3

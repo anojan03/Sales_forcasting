@@ -1,0 +1,74 @@
+[
+  {
+    "step": "data_preparation",
+    "returncode": 0,
+    "elapsed_seconds": 9.577629089355469,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\data_preparation.py"
+    ]
+  },
+  {
+    "step": "baselines",
+    "returncode": 0,
+    "elapsed_seconds": 2.6177473068237305,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\baselines.py"
+    ]
+  },
+  {
+    "step": "prophet_model",
+    "returncode": 0,
+    "elapsed_seconds": 16.052287817001343,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\prophet_model.py"
+    ]
+  },
+  {
+    "step": "xgboost_model",
+    "returncode": 0,
+    "elapsed_seconds": 13.212994575500488,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\xgboost_model.py"
+    ]
+  },
+  {
+    "step": "lstm_model",
+    "returncode": 0,
+    "elapsed_seconds": 104.61617541313171,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\lstm_model.py"
+    ]
+  },
+  {
+    "step": "model_comparison",
+    "returncode": 0,
+    "elapsed_seconds": 8.707972526550293,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\model_comparison.py"
+    ]
+  },
+  {
+    "step": "verify_workflow",
+    "returncode": 0,
+    "elapsed_seconds": 5.407372236251831,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\verify_workflow.py"
+    ]
+  },
+  {
+    "step": "research_report",
+    "returncode": 0,
+    "elapsed_seconds": 9.76118516921997,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\research_report.py"
+    ]
+  }
+]

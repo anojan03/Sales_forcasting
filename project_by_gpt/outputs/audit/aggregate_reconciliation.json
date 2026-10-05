@@ -1,0 +1,28 @@
+[
+  {
+    "source": "Master transaction-level research dataset.csv",
+    "master_nonnegative_only": true,
+    "union_hours": 8616,
+    "missing_values": 0,
+    "max_abs_difference": 1.1368683772161603e-13
+  },
+  {
+    "source": "clean version for modelling.csv",
+    "master_nonnegative_only": false,
+    "union_hours": 8616,
+    "missing_values": 0,
+    "max_abs_difference": 1.1368683772161603e-13
+  },
+  {
+    "source": "Hourly sales by department.csv",
+    "master_nonnegative_only": false,
+    "union_hours": 8616,
+    "missing_values": 0,
+    "max_abs_difference": 1.1368683772161603e-13
+  },
+  {
+    "source": "Daily sales by department.csv",
+    "max_abs_difference": 2.2737367544323206e-13,
+    "union_days": 569
+  }
+]

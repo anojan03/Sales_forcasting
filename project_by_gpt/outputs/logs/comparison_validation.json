@@ -1,0 +1,15 @@
+{
+  "common_n": 1622,
+  "expected_observed_test_n": 1622,
+  "all_expected_hours_common": true,
+  "start_utc": "2026-04-01 06:00:00+00:00",
+  "end_utc": "2026-07-14 20:00:00+00:00",
+  "payday_n": 325,
+  "non_payday_n": 1297,
+  "actual_agreement_tolerance": {
+    "rtol": 1e-10,
+    "atol": 1e-08
+  },
+  "provenance_checked": true,
+  "statistical_tests": "none; descriptive errors only"
+}
