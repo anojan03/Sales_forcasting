@@ -1,6 +1,6 @@
-# Hourly convenience-store sales forecasting
+# Convenience-store sales forecasting research
 
-Fresh research implementation comparing Prophet, XGBoost and LSTM, each with and without a configurable payday proxy. The task is **rolling one-hour-ahead net retail sales forecasting**, issued at the beginning of the target hour. All earlier completed, recorded hours may supply lag inputs. This is not a multi-hour forecast issued at one fixed origin.
+Fresh research implementation comparing Prophet, XGBoost and LSTM with and without payroll proxies. The preserved original study is **rolling one-hour-ahead net retail sales forecasting**, issued at the beginning of the target hour. Extensions add direct upcoming-day forecasts, a validation-weighted hybrid, department analysis, holidays, dependent uncertainty and planning scenarios. The daily forecast is issued at local midnight before any target-day sales. Read IMPLEMENTATION.md and both reports for their distinct methods; hourly and daily scores must not be ranked together.
 
 ## Data and accounting
 
@@ -17,7 +17,7 @@ Original CSVs are preserved. Hashes, column schemas, dates, missing counts, dupl
 - The last three and first three calendar days of each month form a **payday proxy**, not actual customer paydays. Window widths are configurable and not tuned on the test set.
 - Missing hours remain unknown. No opening-hours calendar or extraction completeness proof is available; metrics cover recorded retained-line hours and may exclude genuine zero-transaction trading hours.
 - Analysis starts 1 January 2025 to exclude sparse startup records; the final extraction date, 15 July 2026, is excluded as potentially incomplete.
-- These are one-store, one-holdout, single-seed experiments. No causal or statistical-significance claim is made. Refer to the report for subgroup effects and drift limitations.
+- The original hourly study uses one store, one holdout and one seed. Daily extensions add pre-test XGBoost temporal folds, three LSTM seeds and block-bootstrap sensitivity. No causal or universal statistical-significance claim is made. Refer to both reports for subgroup effects and drift limitations.
 
 ## Setup
 
@@ -96,3 +96,7 @@ Raw timestamps, receipt IDs, customer IDs and product combinations may permit in
 ## Method documentation
 
 See primary [Prophet documentation](https://facebook.github.io/prophet/docs/seasonality,_holiday_effects,_and_regressors.html), [XGBoost parameters](https://xgboost.readthedocs.io/en/stable/parameter.html), [TensorFlow LSTM](https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM), [Tree SHAP](https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html) and [data leakage guidance](https://scikit-learn.org/stable/common_pitfalls.html#data-leakage). These document implementations; the store results come from local execution.
+# Research extensions
+
+The proposal-alignment extensions preserve the original hourly experiment and add a separate upcoming-day study. Read [IMPLEMENTATION.md](IMPLEMENTATION.md) for choices, limitations and commands. Run `python run_extensions.py` for the additions only; `python run_all.py` now runs both workflows. Results are in `outputs/extensions/` and `reports/research_extensions.md`, `.docx` and `.pdf`. Daily and hourly scores have different target units and must not be ranked together. England holidays use a cached official calendar; payroll features are explicitly labelled configurable proxies. The new hybrid is a validation-weighted ensemble, not a sequential residual cascade.
+

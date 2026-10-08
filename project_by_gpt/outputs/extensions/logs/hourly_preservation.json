@@ -1,0 +1,11 @@
+{
+  "Daily_Seasonal_Naive_test.csv": 0.0,
+  "LSTM_Without_Payday_test.csv": 0.0,
+  "LSTM_With_Payday_test.csv": 0.0,
+  "Naive_test.csv": 0.0,
+  "Prophet_Without_Payday_test.csv": 0.0,
+  "Prophet_With_Payday_test.csv": 0.0,
+  "Weekly_Seasonal_Naive_test.csv": 0.0,
+  "XGBoost_Without_Payday_test.csv": 0.0,
+  "XGBoost_With_Payday_test.csv": 0.0
+}

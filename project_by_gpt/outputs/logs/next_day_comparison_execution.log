@@ -1,0 +1,11 @@
+                 model   n        MAE       RMSE
+Prophet_Without_Payday 105 185.173936 238.652217
+   Prophet_With_Payday 105 184.163368 237.649655
+XGBoost_Without_Payday 105 324.707238 435.542029
+   XGBoost_With_Payday 105 325.701409 437.261995
+   LSTM_Without_Payday 105 264.470170 350.556652
+      LSTM_With_Payday 105 263.162086 350.361040
+ Hybrid_Without_Payday 105 237.738171 311.217953
+    Hybrid_With_Payday 105 234.935098 309.118343
+                 Naive 105 266.912952 333.494548
+ Weekly_Seasonal_Naive 105 199.141810 253.146453

@@ -1,0 +1,17 @@
+family,loss,block_days,n,mean_with_minus_without,ci_2_5,ci_97_5,assumption
+Prophet,absolute,7,105,-1.0105676382040276,-3.023546516229803,1.0076208504681952,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Prophet,absolute,14,105,-1.0105676382040276,-3.4696288196676131,1.3000533182710161,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Prophet,squared,7,105,-477.52230919083689,-1370.6838193436779,314.63748564312505,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Prophet,squared,14,105,-477.52230919083689,-1584.2626040188741,385.45481747989214,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+XGBoost,absolute,7,105,0.99417082868303086,-3.4607047520228855,5.4219824242001486,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+XGBoost,absolute,14,105,0.99417082868303086,-4.0965536103748068,5.2727089576357766,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+XGBoost,squared,7,105,1501.1928622205965,-2204.9986733628134,4935.9513164661103,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+XGBoost,squared,14,105,1501.1928622205965,-2543.5614229233611,5213.8360218157959,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+LSTM,absolute,7,105,-1.3080844726562559,-6.4762089175269715,3.5893585966564174,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+LSTM,absolute,14,105,-1.3080844726562559,-6.1340541201636984,3.5417674822126095,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+LSTM,squared,7,105,-137.10790884288869,-3160.9430004029286,2713.1143239138614,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+LSTM,squared,14,105,-137.10790884288869,-2405.1183346810139,2365.6213204724741,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Hybrid,absolute,7,105,-2.8030727122551071,-6.8776469083835279,0.7580065813773883,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Hybrid,absolute,14,105,-2.8030727122551071,-6.2947858760426874,0.87703137664428688,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Hybrid,squared,7,105,-1302.4642566167859,-2962.26854458346,277.44910570402681,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Hybrid,squared,14,105,-1302.4642566167859,-2943.3597362355299,201.78796069972844,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference

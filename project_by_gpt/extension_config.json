@@ -1,0 +1,14 @@
+{
+  "holiday_region": "england-and-wales",
+  "holiday_region_assumed": false,
+  "weekly_payday_weekday": 4,
+  "weekly_window_days": 2,
+  "monthly_window_days": 3,
+  "public_sector_proxy": "illustrative last working day of month plus next two days; not verified employer policy",
+  "sequence_days": 7,
+  "seeds": [42, 43, 44],
+  "bootstrap_replicates": 1000,
+  "bootstrap_block_days": [7, 14],
+  "staffing_peak_quantile": 0.75,
+  "description": "Upcoming local calendar day forecast issued at its midnight, all previous recorded days available; daily recorded revenue, not verified complete trading-day demand. Frozen training weights."
+}

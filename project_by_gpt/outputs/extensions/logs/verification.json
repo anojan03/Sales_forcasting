@@ -1,0 +1,11 @@
+{
+  "daily_feature_future_mutation_invariance": true,
+  "local_calendar_day_alignment": true,
+  "holiday_adjustment_boundary": true,
+  "original_csv_hashes_unchanged": true,
+  "daily_hash_matches": true,
+  "pretest_only_sensitivity_and_expanding_folds": true,
+  "lstm_training_only_scaler_inverse_roundtrip": true,
+  "extreme_days_flagged_not_removed": 11,
+  "stability_scope": "Expanding folds XGBoost; monthly test errors all models; repeated seeds LSTM. Not all-family nested cross-validation."
+}

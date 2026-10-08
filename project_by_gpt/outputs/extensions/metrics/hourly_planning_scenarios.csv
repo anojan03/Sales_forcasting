@@ -1,0 +1,7 @@
+model,n,training_hour_threshold_GBP,peak_hour_precision,peak_hour_recall,scope
+Prophet_Without_Payday,1622,63.5175,0.6,0.0076045627376425855,one-hour workload proxy; not required staff counts
+Prophet_With_Payday,1622,63.5175,0.5454545454545454,0.0076045627376425855,one-hour workload proxy; not required staff counts
+XGBoost_Without_Payday,1622,63.5175,0.6204081632653061,0.5779467680608364,one-hour workload proxy; not required staff counts
+XGBoost_With_Payday,1622,63.5175,0.6124338624338624,0.5868187579214195,one-hour workload proxy; not required staff counts
+LSTM_Without_Payday,1622,63.5175,0.5953947368421053,0.229404309252218,one-hour workload proxy; not required staff counts
+LSTM_With_Payday,1622,63.5175,0.5938864628820961,0.17237008871989862,one-hour workload proxy; not required staff counts

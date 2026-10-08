@@ -1,0 +1,14 @@
+{
+  "families": [
+    "Prophet",
+    "XGBoost",
+    "LSTM"
+  ],
+  "weights": [
+    0.2734669406940269,
+    0.08811669479496045,
+    0.6384163645110126
+  ],
+  "fit_period": "validation only",
+  "form": "convex ensemble; not Prophet-to-XGBoost-to-LSTM cascade"
+}

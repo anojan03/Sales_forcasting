@@ -2,7 +2,7 @@
   {
     "step": "data_preparation",
     "returncode": 0,
-    "elapsed_seconds": 9.577629089355469,
+    "elapsed_seconds": 13.018265008926392,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\data_preparation.py"
@@ -11,7 +11,7 @@
   {
     "step": "baselines",
     "returncode": 0,
-    "elapsed_seconds": 2.6177473068237305,
+    "elapsed_seconds": 6.014841318130493,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\baselines.py"
@@ -20,7 +20,7 @@
   {
     "step": "prophet_model",
     "returncode": 0,
-    "elapsed_seconds": 16.052287817001343,
+    "elapsed_seconds": 80.72388648986816,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\prophet_model.py"
@@ -29,7 +29,7 @@
   {
     "step": "xgboost_model",
     "returncode": 0,
-    "elapsed_seconds": 13.212994575500488,
+    "elapsed_seconds": 35.57171845436096,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\xgboost_model.py"
@@ -38,7 +38,7 @@
   {
     "step": "lstm_model",
     "returncode": 0,
-    "elapsed_seconds": 104.61617541313171,
+    "elapsed_seconds": 132.22559189796448,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\lstm_model.py"
@@ -47,7 +47,7 @@
   {
     "step": "model_comparison",
     "returncode": 0,
-    "elapsed_seconds": 8.707972526550293,
+    "elapsed_seconds": 9.640482425689697,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\model_comparison.py"
@@ -56,7 +56,7 @@
   {
     "step": "verify_workflow",
     "returncode": 0,
-    "elapsed_seconds": 5.407372236251831,
+    "elapsed_seconds": 8.519978284835815,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\verify_workflow.py"
@@ -65,10 +65,100 @@
   {
     "step": "research_report",
     "returncode": 0,
-    "elapsed_seconds": 9.76118516921997,
+    "elapsed_seconds": 6.544999361038208,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\research_report.py"
+    ]
+  },
+  {
+    "step": "extension_preparation",
+    "returncode": 0,
+    "elapsed_seconds": 2.0519778728485107,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\extension_preparation.py"
+    ]
+  },
+  {
+    "step": "department_analysis",
+    "returncode": 0,
+    "elapsed_seconds": 6.556553363800049,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\department_analysis.py"
+    ]
+  },
+  {
+    "step": "next_day_prophet",
+    "returncode": 0,
+    "elapsed_seconds": 11.561685562133789,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\next_day_prophet.py"
+    ]
+  },
+  {
+    "step": "next_day_xgboost",
+    "returncode": 0,
+    "elapsed_seconds": 12.396657466888428,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\next_day_xgboost.py"
+    ]
+  },
+  {
+    "step": "next_day_lstm",
+    "returncode": 0,
+    "elapsed_seconds": 99.93230319023132,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\next_day_lstm.py"
+    ]
+  },
+  {
+    "step": "hybrid_model",
+    "returncode": 0,
+    "elapsed_seconds": 3.0717406272888184,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\hybrid_model.py"
+    ]
+  },
+  {
+    "step": "next_day_comparison",
+    "returncode": 0,
+    "elapsed_seconds": 14.195736408233643,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\next_day_comparison.py"
+    ]
+  },
+  {
+    "step": "extension_validation",
+    "returncode": 0,
+    "elapsed_seconds": 15.645274639129639,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\extension_validation.py"
+    ]
+  },
+  {
+    "step": "extension_report",
+    "returncode": 0,
+    "elapsed_seconds": 6.549567222595215,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\extension_report.py"
+    ]
+  },
+  {
+    "step": "research_notebook",
+    "returncode": 0,
+    "elapsed_seconds": 6.644012212753296,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\research_notebook.py"
     ]
   }
 ]

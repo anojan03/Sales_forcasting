@@ -1,0 +1,22 @@
+{
+  "validated_models": [
+    "Prophet_Without_Payday",
+    "Prophet_With_Payday",
+    "XGBoost_Without_Payday",
+    "XGBoost_With_Payday",
+    "LSTM_Without_Payday",
+    "LSTM_With_Payday",
+    "Hybrid_Without_Payday",
+    "Hybrid_With_Payday",
+    "Naive",
+    "Weekly_Seasonal_Naive",
+    "LSTM_Without_Payday_seed_43",
+    "LSTM_With_Payday_seed_43",
+    "LSTM_Without_Payday_seed_44",
+    "LSTM_With_Payday_seed_44"
+  ],
+  "n_common": 105,
+  "positive_MAPE_only": true,
+  "test_selection": false,
+  "all_test_dates_contiguous": true
+}

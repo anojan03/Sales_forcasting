@@ -1,0 +1,33 @@
+{
+  "derived_columns": [
+    "ALCOHOL",
+    "CARRIER BAG",
+    "CONFECTIONARY",
+    "DEFAULT",
+    "FROZEN",
+    "FRUIT & VEG",
+    "GROCERY",
+    "GROCERY NON VAT",
+    "HOUSEHOLD",
+    "INSTANT LOTTERY",
+    "LOTTERY",
+    "MEDICINE",
+    "NEWS & MAGAZINES",
+    "PAYPOINT",
+    "PET FOOD",
+    "SOFT DRINKS",
+    "STATIONARY",
+    "TOBACCO",
+    "Unknown or receipt adjustment",
+    "VAPES"
+  ],
+  "identifiers_excluded": [
+    "Customer_ID",
+    "Transaction_ID",
+    "Barcode",
+    "Payment_Type"
+  ],
+  "raw_files_unchanged": true,
+  "access_controls_encryption_consent_retention": "Requires owner/institution confirmation; not inferred from local file storage",
+  "causal_warning": "Unadjusted department group means confounded by weekdays, trend, coverage and promotions"
+}

@@ -13,8 +13,8 @@ promotion_adjustment        4917   -3775.80       4917
 refund                       101   -1696.25        101
 supplier_payout               32   -1957.75         32
 voucher                        3     -10.08          3
-            clock_hours  observed_hours      sales
-split                                             
-test               2520            1622  115017.96
-train              8760            5538  265411.68
-validation         2159            1359   68438.06
+            clock_hours  observed_hours      sales  eligible_forecast_hours
+split                                                                      
+test               2520            1622  115017.96                     1622
+train              8760            5538  265411.68                     5526
+validation         2159            1359   68438.06                     1359

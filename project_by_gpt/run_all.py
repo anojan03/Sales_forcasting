@@ -6,8 +6,15 @@ ROOT=Path(__file__).resolve().parent
 
 def main():
     logs=ROOT/'outputs'/'logs'; logs.mkdir(parents=True,exist_ok=True)
-    steps=['data_preparation','baselines','prophet_model','xgboost_model','lstm_model','model_comparison','verify_workflow','research_report']
+    steps=['data_preparation','baselines','prophet_model','xgboost_model','lstm_model','model_comparison','verify_workflow','research_report','extension_preparation','department_analysis','next_day_prophet','next_day_xgboost','next_day_lstm','hybrid_model','next_day_comparison','extension_validation','extension_report','research_notebook']
+    import argparse
+    parser=argparse.ArgumentParser(); parser.add_argument('--from-step',choices=steps); args=parser.parse_args()
     result=[]
+    if args.from_step:
+        earlier=steps[:steps.index(args.from_step)]
+        status=logs/'workflow_status.json'
+        result=[r for r in json.loads(status.read_text()) if r['step'] in earlier] if status.exists() else []
+        steps=steps[steps.index(args.from_step):]
     for step in steps:
         start=time.time(); print(f'Running {step}',flush=True)
         command=[sys.executable,str(ROOT/'src'/f'{step}.py')]

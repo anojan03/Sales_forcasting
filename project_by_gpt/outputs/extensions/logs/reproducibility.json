@@ -1,0 +1,19 @@
+{
+  "two_executions_max_absolute_differences": {
+    "Prophet_Without_Payday": 0.0,
+    "Prophet_With_Payday": 0.0,
+    "XGBoost_Without_Payday": 0.0,
+    "XGBoost_With_Payday": 0.0,
+    "LSTM_Without_Payday": 0.0,
+    "LSTM_With_Payday": 0.0,
+    "Hybrid_Without_Payday": 0.0,
+    "Hybrid_With_Payday": 0.0,
+    "Naive": 0.0,
+    "Weekly_Seasonal_Naive": 0.0,
+    "LSTM_Without_Payday_seed_43": 0.0,
+    "LSTM_With_Payday_seed_43": 0.0,
+    "LSTM_Without_Payday_seed_44": 0.0,
+    "LSTM_With_Payday_seed_44": 0.0
+  },
+  "all_within_1e_8": true
+}

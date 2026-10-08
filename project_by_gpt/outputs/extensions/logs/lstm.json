@@ -1,0 +1,86 @@
+{
+  "trials": [
+    {
+      "model": "LSTM_Without_Payday",
+      "seed": 42,
+      "epochs": 40,
+      "validation": {
+        "n": 90,
+        "MAE": 141.91958608669705,
+        "RMSE": 183.5217123563932,
+        "MAPE_positive_only": 21.54215338421186,
+        "MAPE_n": 90,
+        "bias": -16.900272311740455
+      }
+    },
+    {
+      "model": "LSTM_With_Payday",
+      "seed": 42,
+      "epochs": 40,
+      "validation": {
+        "n": 90,
+        "MAE": 143.23596156141494,
+        "RMSE": 183.80283084843632,
+        "MAPE_positive_only": 21.692825849859794,
+        "MAPE_n": 90,
+        "bias": -12.57630346679688
+      }
+    },
+    {
+      "model": "LSTM_Without_Payday_seed_43",
+      "seed": 43,
+      "epochs": 35,
+      "validation": {
+        "n": 90,
+        "MAE": 138.33920810275606,
+        "RMSE": 179.49563209146984,
+        "MAPE_positive_only": 20.435755122185736,
+        "MAPE_n": 90,
+        "bias": -31.4284569905599
+      }
+    },
+    {
+      "model": "LSTM_With_Payday_seed_43",
+      "seed": 43,
+      "epochs": 34,
+      "validation": {
+        "n": 90,
+        "MAE": 136.9558666856554,
+        "RMSE": 175.9961979380142,
+        "MAPE_positive_only": 20.2790640474746,
+        "MAPE_n": 90,
+        "bias": -24.2413964436849
+      }
+    },
+    {
+      "model": "LSTM_Without_Payday_seed_44",
+      "seed": 44,
+      "epochs": 40,
+      "validation": {
+        "n": 90,
+        "MAE": 143.2296429578993,
+        "RMSE": 187.52221373554565,
+        "MAPE_positive_only": 21.393257759271226,
+        "MAPE_n": 90,
+        "bias": -32.98551095920139
+      }
+    },
+    {
+      "model": "LSTM_With_Payday_seed_44",
+      "seed": 44,
+      "epochs": 39,
+      "validation": {
+        "n": 90,
+        "MAE": 144.71391581217446,
+        "RMSE": 185.7966270741823,
+        "MAPE_positive_only": 21.479734577255698,
+        "MAPE_n": 90,
+        "bias": -17.776548624674483
+      }
+    }
+  ],
+  "units": 16,
+  "sequence_days": 7,
+  "meaning": "local days, not 24 elapsed hours per step",
+  "no_test_seed_selection": true
+}

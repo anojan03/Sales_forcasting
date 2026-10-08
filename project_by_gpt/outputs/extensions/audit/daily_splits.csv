@@ -1,0 +1,4 @@
+split,days,sales
+test,105,115017.96
+train,365,265411.68
+validation,90,68438.06

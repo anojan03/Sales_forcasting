@@ -1,0 +1,16 @@
+{
+  "word_pages": 12,
+  "pdf_pages": 12,
+  "all_word_and_pdf_pages_visually_reviewed": true,
+  "slides_rendered_reviewed": 7,
+  "final_word_render_text_identical_to_reviewed_render": true,
+  "sha256": {
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.md": "31777aa0567f53903804d0d9545be88ff97bd06a0be76d6fb1916ef2a043a7e0",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.docx": "c54f2277f080d4abc40e965aa2e92ce90ae617406d5cc71c876907f412bf11b3",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.pdf": "36391ee2492cbd84386e8239474134b07da3b3440a2322bb94b54cefdee69010",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_results.pptx": "e7848c5562f982921f8cb33e3a9b6a4440f340b0fd0be46fe5fb478e1b038aa4",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\research_results.ipynb": "b3b99703f70a225ca4bb9bc2c7fded9ebe1100eac37c5a3139f2c2447a6bcc2d"
+  },
+  "verified_client_date": "2026-10-08",
+  "final_pdf_pixels_identical_to_reviewed_pages": true
+}
