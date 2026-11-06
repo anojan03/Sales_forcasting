@@ -1,0 +1,4 @@
+split,uhl_known,nao_known,bath_known
+test,105,105,105
+train,332,365,59
+validation,88,90,90

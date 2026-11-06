@@ -1,0 +1,10 @@
+{
+  "prophet_fit_end_exclusive": "2025-07-01",
+  "xgboost_fit_end_exclusive": "2025-10-01",
+  "sequence_days": 7,
+  "seed": 42,
+  "prophet_changepoint_prior_scale": 0.05,
+  "xgboost": {"n_estimators": 100, "max_depth": 2, "learning_rate": 0.03, "min_child_weight": 5},
+  "lstm": {"units": 8, "dense_units": 8, "learning_rate": 0.001, "epochs": 40, "patience": 5, "batch_size": 16},
+  "design": "Frozen stage A trained Jan-Jun 2025; stage B learns Jul-Sep out-of-stage-A-training residuals; stage C learns Oct-Dec out-of-stage-A/B-training residuals. Validation selects stopping epoch only. Same structure and dates in payday pair. No test tuning."
+}

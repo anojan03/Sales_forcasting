@@ -1,0 +1,20 @@
+{
+  "client_date": "2026-11-03",
+  "page_counts": {
+    "research_completion.pdf": 9,
+    "research_extensions.pdf": 12
+  },
+  "all_report_pages_visually_reviewed": true,
+  "slide_count": 9,
+  "sha256": {
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_completion.md": "08132585b895367c1769b1783ba31c552944875dcd26f80eb2e19159cf2959cc",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_completion.docx": "60f30e3d8823ce7c2c206d78ee93ab3038d2b42cb066d117bbc91cea28f15f76",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_completion.pdf": "fdc11ddee480d3050e4bf19c0f07245174cea590e064a9a79df18b1548db901c",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.md": "08edd33e251f459590dcee56eb8a48681ef8e92b2cc010488da9e3c13cd55874",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.docx": "589a4d5919be2157417a6b82936cb1107ec9b18cd6aaf4beb514704ffb29d794",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_extensions.pdf": "00691c0c32e17e38e04107db625a2d9d8c7ff1704f6989d571dd0da6551bcf06",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\literature_review.md": "25373bcc220659cd5ada8efddc1e0728a0438ca43ee828a058f5097556f52d34",
+    "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\reports\\research_results.pptx": "77ca52a0d3f0d2d69aa7c18193b82d5bee88b8c16d447f2ceabcd7972fa9afd0"
+  },
+  "dissertation_deferred": true
+}

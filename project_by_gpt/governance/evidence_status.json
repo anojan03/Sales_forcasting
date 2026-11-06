@@ -1,0 +1,14 @@
+{
+  "status": "draft_for_owner_and_institution_review",
+  "store_permission_reference": null,
+  "institutional_ethics_reference": null,
+  "controller_and_lawful_basis_confirmed": false,
+  "approved_access_list": null,
+  "encrypted_storage_verified": false,
+  "retention_review_date": null,
+  "retention_policy_reference": null,
+  "publication_permission_reference": null,
+  "actual_customer_paydays_observed": false,
+  "published_employer_calendar_sources_available": true,
+  "operational_pilot_completed": false
+}

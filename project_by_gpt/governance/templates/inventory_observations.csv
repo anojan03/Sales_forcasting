@@ -1,0 +1,1 @@
+date,product_code,opening_units,replenishment_units,units_sold,closing_units,verified_stockout_minutes,selling_price_gbp,unit_cost_gbp,spoilage_units,lead_time_days,order_quantity,policy_id,promotion_flag,extraction_complete

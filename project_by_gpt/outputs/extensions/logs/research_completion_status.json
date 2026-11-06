@@ -1,0 +1,47 @@
+{
+  "client_date": "2026-11-03",
+  "python_source_sha256": {
+    "src\\baselines.py": "fabc97611f914e4b3459a7f2573d49396d83fa86690503a1caa879459bc36994",
+    "src\\data_preparation.py": "23f2cf6d15b2fbc0c295c80e92ff441102d29c714d64f082a3b55f7cde784367",
+    "src\\department_analysis.py": "22827b6a81b1c0ec2bf4dd2d644a92f85793ddb188462ee434714138680c27c1",
+    "src\\extension_preparation.py": "824ed764b4e074c86e5e326e70ca066e76c6346687923e835fddb79dcb1ebb17",
+    "src\\extension_report.py": "8f0ae66466b55ce10c8c546bb5faea9c90bcb4d451275f8a432eb76debc3da9f",
+    "src\\extension_validation.py": "465e66195a91a0e5f51c346a569b12973ab4d64c43ac31ba24d810c6414a82aa",
+    "src\\hybrid_model.py": "ed1946336bfa013c39a6fb07e1df48253113fa4289254e36d01db111d6010849",
+    "src\\lstm_model.py": "89ececae6fbd6799b2e6eeb00e5360971e76b53f12e0ef12cad9a486c607d095",
+    "src\\model_comparison.py": "2b6c7b24ad6fbf9d24e7d95c1cd6a2bb07280af6c18210cc49e59874acbd2321",
+    "src\\next_day_comparison.py": "b753993a6b066fbe920acfddfc09bea915ae4890ec055bad463b7a17eedd4d3f",
+    "src\\next_day_lstm.py": "a11b4fd8caee333d818dfe0c0ed40b53fcfe64c9510f0d3c4ed4897ffaa67ca3",
+    "src\\next_day_prophet.py": "22ce3077126ac88862506f5044254c0940d5a5ea13a929aed604977986ca5841",
+    "src\\next_day_xgboost.py": "6f6cbad092f6cd765736412cc5cb3cde54b3fb2354fcd157ac4de07cdebf229b",
+    "src\\online_payroll_analysis.py": "9819aad94b2dfe1a622209f63f309879de7dbd11211479880eeeeeefbfd9cd5e",
+    "src\\privacy_export.py": "f6d11fb11bce87a7fb78c60f4f54b4f29e5c10b8659de874885d6eefaaade7a3",
+    "src\\prophet_model.py": "e8e42e606131a0633bd5f2811bb29d6399a5fcaf50536fc108427134cf008a2c",
+    "src\\report_artifacts.py": "89b37d8a6c0aacc22f2cebcaf434243cc9ab5c1c501a27dcd77c44872d187ad0",
+    "src\\research_completion.py": "eed1746a3c183ed572a2b506c2d4393bf4f4daf25dbd034d3a5a4ca642454df2",
+    "src\\research_notebook.py": "bc6425c795988e9565e9803fffdc57699be59d9e500d19879bdeeed897b045a3",
+    "src\\research_presentation.py": "e90f0934a9866be9806bacfc24b3f313f742feede8e991dabbecec2c1e6e931e",
+    "src\\research_report.py": "89f0e40e398f706ff594b31d7ffcc2a75f5da9a8c1904e6d641cb31f190f8dbf",
+    "src\\sequential_hybrid_model.py": "aeb54e4ea9b0b3d551d2c45bf58b9333345f6cc4337d4f6955f103179c5a9d4b",
+    "src\\verify_reproducibility.py": "f737981f3721f7128946bf997ca4da63b10c336e45656b46d66f80136baaf5c5",
+    "src\\verify_workflow.py": "ddbe4c4e504f83b4aebf02a77284c3c87d791a00ebcf963efeabf2e15b75481f",
+    "src\\xgboost_model.py": "6880f99502b2227b21c7475dc56da9f4918b7de7070baa4dfc964d82b65ad5b2",
+    "run_all.py": "afd23a36ed55904bcada535054a1b8150376886a888672e132edc45014dd3e6b",
+    "run_extensions.py": "0aa21e3c97a8f6b9c8d871ec82a158cbd32d74ae74bf062a2f8259532cfba2a8"
+  },
+  "all_22_recorded_workflow_stages_successful": true,
+  "original_csv_hashes_unchanged": true,
+  "new_model_reproducibility": {
+    "Sequential_Hybrid_Without_Payday_test.csv": 0.0,
+    "Sequential_Hybrid_With_Payday_test.csv": 0.0
+  },
+  "new_components_executed": [
+    "sequential_hybrid_model",
+    "online_payroll_analysis",
+    "privacy_export",
+    "research_completion"
+  ],
+  "dissertation_deferred": true,
+  "customer_income_exposure_verified": false,
+  "operational_pilot_completed": false
+}

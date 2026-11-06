@@ -1,6 +1,6 @@
 # Research extension implementation
 
-The working one-hour workflow and its results are preserved. The new upcoming-day experiment is separate because daily and hourly forecast errors are not comparable. All new research results are generated under `outputs/extensions`; its report is `reports/research_extensions` in Markdown, Word and PDF.
+The working one-hour workflow and its results are preserved. The upcoming-day experiment is separate because daily and hourly forecast errors are not comparable. Research outputs are under `outputs/extensions`; reports are `reports/research_extensions` and `reports/research_completion` in Markdown, Word and PDF. The 3 November update adds a literal sequential residual cascade, an online employer-payroll scenario, a targeted critical literature review, and proposed governance/operational documentation. Dissertation preparation is deferred at the user's explicit request.
 
 ## Experimental choices
 
@@ -9,7 +9,7 @@ The working one-hour workflow and its results are preserved. The new upcoming-da
 - Use England/Wales official bank holidays following the user's confirmation that the shop is in England. Cache and hash the source calendar for offline reruns.
 - Add configurable monthly, Friday/Saturday weekly and last-working-day payroll proxies. The last-working-day scenario is illustrative, not a verified public-sector employer rule.
 - Pair with/without variants using the same data and shared structural tuning. All variants contain holiday features; only payroll features differ.
-- Add a convex Prophet/XGBoost/LSTM hybrid with shared weights learned from validation, not test. This is a justified ensemble alternative to the literal slide arrow suggesting a residual cascade. An ensemble is not a sequential residual pipeline.
+- Preserve the convex Prophet/XGBoost/LSTM ensemble and add a separately named Sequential_Hybrid residual cascade with disjoint chronological stage fitting blocks. Later exploratory experiments are labelled as such because the earlier historical test results were already known.
 - Expand category/hour/weekday/payday analysis. Keep unattributable receipt adjustments in an explicit unknown group rather than invent category allocations.
 - Evaluate positive-target daily MAPE with denominator counts; retain MAE/RMSE as primary measures. Do not reinterpret hourly net-sales MAPE as valid.
 - Add pre-test expanding XGBoost validation, validation-only monthly-window sensitivity, monthly test results for every model and three LSTM seeds. No test-based seed selection.
@@ -19,7 +19,7 @@ The working one-hour workflow and its results are preserved. The new upcoming-da
 
 ## Remaining evidence and scope
 
-Actual customer/employer payday dates, complete capture/opening-hours metadata, stock/service-time/cost datasets, store/institution permissions and storage/retention policy cannot be invented. These are explicit remaining requirements. The supplement contains a short verified methodological literature discussion, not a systematic literature review or university-approved final dissertation. SHAP is implemented for XGBoost, not claimed for Prophet/LSTM. Statistical intervals do not establish causal income effects. Presentation results must be reviewed against the saved outputs; the original proposal and uploaded slides are not overwritten.
+Actual customer paydays, complete capture/opening-hours metadata, stock/service-time/cost datasets and store/institution permissions cannot be invented. Published NAO/UHL/Bath employer schedules and their coverage are recorded in payroll_sources.json and outputs/extensions/audit/online_payroll_dates.csv. UHL historical rule application is retrospective and December remains unknown; exact Bath dates are audited without filling earlier months. A matched XGBoost scenario reports the sourced flags separately from the primary comparison. reports/literature_review.md is a developed targeted narrative review, not an exhaustive systematic review. governance/ contains proposed procedures, unconfirmed evidence fields and empty pilot templates. privacy_export.py produces a local review candidate, not certified anonymous or authorised public data. SHAP remains XGBoost-specific; no causal income effect or realised business saving is claimed. The uploaded proposal/slides remain preserved.
 
 ## Commands
 

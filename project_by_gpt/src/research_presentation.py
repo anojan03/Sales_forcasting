@@ -32,7 +32,9 @@ def run():
     s=slide('Payroll proxies can improve or worsen forecasts'); chart(s,'daily_payday_effect.png')
     s=slide('Department behaviour is analysed from recorded sales'); chart(s,'department_patterns.png')
     s=slide('XGBoost explanations describe prediction contributions'); chart(s,'XGBoost_With_Payday_shap.png')
-    s=slide('What the evidence supports and what remains unknown'); text(s,['England bank holidays and working-day indicators are included.','Payroll features are illustrative monthly, weekly and last-working-day proxies.','Block-bootstrap intervals, temporal folds and LSTM seeds assess uncertainty.','Planning scenarios flag high-revenue days; no measured stockout or staffing savings.','Actual paydays, recording completeness and governance require external evidence.','The hybrid is a weighted ensemble, not a sequential residual cascade.'])
+    s=slide('Sequential hybrid follows the residual-learning architecture'); text(s,['Prophet prediction + XGBoost residual correction + LSTM remaining correction.','Chronological stage blocks: January-June, July-September, October-December 2025.','Later stages learn on forecasts outside earlier stages\' fitting periods.','The existing weighted ensemble is preserved as a separate comparison.','This is an exploratory extension after earlier test outcomes were inspected.'])
+    s=slide('Online payroll sources are employer-specific'); chart(s,'online_payroll_comparison.png')
+    s=slide('What the evidence supports and what remains unknown'); text(s,['England bank holidays and working-day indicators are included.','NAO, Leicester NHS and Bath payroll sources are documented separately.','Published schedules do not identify the paydays of shop customers.','Literature review and governance/pilot protocols are prepared.','No measured stockout, staffing or profitability improvement is claimed.','Dissertation work is deferred; permissions and external evidence remain pending.'])
     for s in p.slides:
         for sh in s.shapes:
             if sh.has_text_frame:

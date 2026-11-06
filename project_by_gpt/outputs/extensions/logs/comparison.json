@@ -8,6 +8,8 @@
     "LSTM_With_Payday",
     "Hybrid_Without_Payday",
     "Hybrid_With_Payday",
+    "Sequential_Hybrid_Without_Payday",
+    "Sequential_Hybrid_With_Payday",
     "Naive",
     "Weekly_Seasonal_Naive",
     "LSTM_Without_Payday_seed_43",

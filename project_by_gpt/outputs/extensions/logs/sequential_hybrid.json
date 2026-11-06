@@ -1,0 +1,63 @@
+{
+  "config": {
+    "prophet_fit_end_exclusive": "2025-07-01",
+    "xgboost_fit_end_exclusive": "2025-10-01",
+    "sequence_days": 7,
+    "seed": 42,
+    "prophet_changepoint_prior_scale": 0.05,
+    "xgboost": {
+      "n_estimators": 100,
+      "max_depth": 2,
+      "learning_rate": 0.03,
+      "min_child_weight": 5
+    },
+    "lstm": {
+      "units": 8,
+      "dense_units": 8,
+      "learning_rate": 0.001,
+      "epochs": 40,
+      "patience": 5,
+      "batch_size": 16
+    },
+    "design": "Frozen stage A trained Jan-Jun 2025; stage B learns Jul-Sep out-of-stage-A-training residuals; stage C learns Oct-Dec out-of-stage-A/B-training residuals. Validation selects stopping epoch only. Same structure and dates in payday pair. No test tuning."
+  },
+  "models": [
+    {
+      "model": "Sequential_Hybrid_Without_Payday",
+      "stage_training_n": [
+        153,
+        92,
+        92
+      ],
+      "stage_training_end": [
+        "2025-06-30 00:00:00",
+        "2025-09-30 00:00:00",
+        "2025-12-31 00:00:00"
+      ],
+      "epochs_run": 40,
+      "best_epoch": 37
+    },
+    {
+      "model": "Sequential_Hybrid_With_Payday",
+      "stage_training_n": [
+        153,
+        92,
+        92
+      ],
+      "stage_training_end": [
+        "2025-06-30 00:00:00",
+        "2025-09-30 00:00:00",
+        "2025-12-31 00:00:00"
+      ],
+      "epochs_run": 40,
+      "best_epoch": 40
+    }
+  ],
+  "verified": {
+    "disjoint_stage_fit_periods": true,
+    "residual_targets_out_of_earlier_stage_training": true,
+    "training_only_scaler_inverse_roundtrip": true,
+    "future_residual_mutation_invariance": true
+  },
+  "limitation": "Chronological stage splitting reduces per-stage sample size. This is a later exploratory experiment: test outcomes were already known from earlier models; no settings were chosen from new test scores."
+}

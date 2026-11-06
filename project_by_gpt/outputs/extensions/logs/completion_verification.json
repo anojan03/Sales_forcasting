@@ -1,0 +1,10 @@
+{
+  "cascade_forecast_stage_sum_matches": true,
+  "cascade_actuals_match_prepared_test": true,
+  "literature_review_exists": true,
+  "governance_protocols_exist": true,
+  "dissertation_deferred_by_user": true,
+  "customer_paydays_verified": false,
+  "release_authorised": false,
+  "model_settings_and_sources_frozen_before_this_run": true
+}

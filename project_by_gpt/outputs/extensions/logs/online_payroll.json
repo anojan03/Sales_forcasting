@@ -1,0 +1,89 @@
+{
+  "sources": {
+    "retrieved_on": "2026-11-03",
+    "analysis_status": "retrospective employer-calendar scenarios; customer employer mix is unobserved",
+    "window_days": 3,
+    "sources": [
+      {
+        "id": "nao",
+        "employer": "National Audit Office",
+        "url": "https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf",
+        "document_date": "2024-04-09",
+        "rule": "Last working day of each calendar month",
+        "historical_application": "Document predates the experiment; continuation through 2025-26 is assumed, not independently confirmed"
+      },
+      {
+        "id": "uhl",
+        "employer": "University Hospitals of Leicester resident doctors",
+        "url": "https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/",
+        "document_date": null,
+        "rule": "27th, moved to previous banking day for weekends/bank holidays; December is an unspecified exception",
+        "historical_application": "Current published policy applied retrospectively; historical publication/effective dates unverified; December and potentially affected January spillover remain unknown"
+      },
+      {
+        "id": "bath",
+        "employer": "University of Bath",
+        "url": "https://www.bath.ac.uk/corporate-information/payroll-deadlines/",
+        "document_date": null,
+        "rule": "Explicit published payment dates, not payroll submission deadlines",
+        "historical_application": "Exact published calendar covers November 2025 to March 2027 only; earlier months remain unknown"
+      }
+    ]
+  },
+  "chosen_depth": 2,
+  "validation_trials": [
+    {
+      "depth": 2,
+      "pay": false,
+      "n": 88,
+      "MAE": 154.6210805719549,
+      "RMSE": 196.32568722953295,
+      "MAPE_positive_only": 25.42141722014563,
+      "MAPE_n": 88,
+      "bias": 7.999072071422225
+    },
+    {
+      "depth": 2,
+      "pay": true,
+      "n": 88,
+      "MAE": 152.3383683083274,
+      "RMSE": 194.80511829492667,
+      "MAPE_positive_only": 25.072990767251774,
+      "MAPE_n": 88,
+      "bias": 9.452938509854398
+    },
+    {
+      "depth": 3,
+      "pay": false,
+      "n": 88,
+      "MAE": 157.11011105624112,
+      "RMSE": 200.35589684194528,
+      "MAPE_positive_only": 26.01831706983911,
+      "MAPE_n": 88,
+      "bias": 16.610407132235437
+    },
+    {
+      "depth": 3,
+      "pay": true,
+      "n": 88,
+      "MAE": 155.90003032337538,
+      "RMSE": 199.19339383252466,
+      "MAPE_positive_only": 25.74326834963149,
+      "MAPE_n": 88,
+      "bias": 14.020363630814982
+    }
+  ],
+  "split_n": {
+    "train": 306,
+    "validation": 88,
+    "test": 105
+  },
+  "verified": {
+    "December_exception_unknown": true,
+    "Bath_uncovered_months_unknown": true,
+    "published_January_date_matches": true,
+    "NHS_weekend_adjustment_matches": true,
+    "paired_test_alignment_and_actuals": true
+  },
+  "limits": "Current UHL rule applied retrospectively; no proof of pre-origin publication or customer employer exposure. Different training coverage from primary comparison. Exact Bath calendar audited but not fitted due sparse training coverage."
+}

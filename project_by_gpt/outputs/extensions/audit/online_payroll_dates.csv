@@ -1,0 +1,64 @@
+source_id,employer,month,pay_date,coverage_known,date_type,source_url,retrieved_on,customer_exposure_verified
+nao,National Audit Office,2024-12,2024-12-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2024-12,,False,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2024-12,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-01,2025-01-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-01,2025-01-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-01,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-02,2025-02-28,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-02,2025-02-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-02,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-03,2025-03-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-03,2025-03-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-03,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-04,2025-04-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-04,2025-04-25,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-04,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-05,2025-05-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-05,2025-05-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-05,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-06,2025-06-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-06,2025-06-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-06,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-07,2025-07-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-07,2025-07-25,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-07,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-08,2025-08-29,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-08,2025-08-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-08,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-09,2025-09-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-09,2025-09-26,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-09,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-10,2025-10-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-10,2025-10-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-10,,False,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-11,2025-11-28,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-11,2025-11-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-11,2025-11-25,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2025-12,2025-12-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2025-12,,False,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2025-12,2025-12-22,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-01,2026-01-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-01,2026-01-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-01,2026-01-23,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-02,2026-02-27,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-02,2026-02-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-02,2026-02-25,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-03,2026-03-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-03,2026-03-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-03,2026-03-25,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-04,2026-04-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-04,2026-04-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-04,2026-04-24,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-05,2026-05-29,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-05,2026-05-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-05,2026-05-22,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-06,2026-06-30,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-06,2026-06-26,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-06,2026-06-25,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-07,2026-07-31,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-07,2026-07-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-07,2026-07-24,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False
+nao,National Audit Office,2026-08,2026-08-28,True,rule_derived_scenario,https://www.nao.org.uk/wp-content/uploads/2024/06/foi-1710-hr-manual.pdf,2026-11-03,False
+uhl,University Hospitals of Leicester resident doctors,2026-08,2026-08-27,True,rule_derived_scenario,https://www.uhleicester.nhs.uk/careers/planning/resident-doctors-induction/resident-doctor-useful-information/,2026-11-03,False
+bath,University of Bath,2026-08,2026-08-25,True,published_calendar,https://www.bath.ac.uk/corporate-information/payroll-deadlines/,2026-11-03,False

@@ -1,0 +1,214 @@
+# Retail forecasting research implementation supplement
+
+This supplement extends the preserved hourly study with direct upcoming-day forecasting, richer calendar proxies, department behavioural analysis, a hybrid ensemble, stability checks and operational scenarios. Read it alongside research_report.md for the original data audit and one-hour results. Daily and hourly scores use different targets and must not be ranked together.
+
+The common daily test contains 105 recorded shop days. The lowest daily RMSE is Prophet_With_Payday: GBP 237.650, with MAE GBP 184.163. Rankings are holdout-specific. The observed target is recorded revenue, not independently verified complete demand.
+
+## Forecast task and data integrity
+
+Each forecast is issued at 00:00 Europe/London on its target day, before any target-day transactions are observed, and covers that local day. Past completed days may enter lag histories at later origins. The daily horizon is 23, 24 or 25 elapsed hours around daylight-saving changes. LSTM steps represent local calendar days. Daily sales sum existing net-sales observations; missing hours are not filled with zero. Unknown full days remain missing and cannot become target zeros. No assertion of complete shop-day capture is possible without opening-hours and till-system evidence.
+
+The training period is 2025, validation January to March 2026, and test April 1 to July 14 2026. The first 28 days are excluded consistently to establish lag context. Imputers and target scalers fit training only. Frozen base models never train on test. Original CSVs and hourly outputs remain intact. Derived department aggregates exclude direct customer/receipt/payment identifiers; this does not certify raw-data anonymisation.
+
+## Calendar and payday methods
+
+England was confirmed by the researcher. Bank holidays use the cached official GOV.UK England-and-Wales JSON snapshot, including substitute dates. Working-day means Monday-Friday excluding these holidays, not verified store opening. Both paired variants include holidays and working-day features. Payday variants alone add three flags: first/last three calendar days of a month; Friday and Saturday as an illustrative weekly salary-spending window; last working day of each month plus two following days. Last-working-day moves backwards over weekends and bank holidays. This is a configurable payroll scenario, not an established public-sector payroll rule. Actual customer payday and employer schedules remain unavailable. Overlapping proxy flags are allowed.
+
+## Model settings and hybrid design
+
+Prophet uses daily targets with weekly seasonality, monthly cyclic regressors, lag/rolling predictors and holiday indicators; yearly seasonality is disabled. A shared paired validation choice selects changepoint prior scale from 0.01 and 0.05. XGBoost uses 200 trees, learning rate 0.03, minimum child weight 5, two CPU threads, seed 42, and a shared depth choice from 2 and 3. Past recorded-hours coverage is a lagged feature, never target-day coverage.
+
+LSTM uses seven preceding calendar days of scaled sales, observed masks and calendar features, plus known target-day calendar inputs. One 16-unit LSTM feeds a 16-unit ReLU dense layer and linear output. Adam learning rate 0.001, batch size 32, maximum 40 epochs, patience 5, chronological unshuffled training, restored best validation weights. A training-only target scaler is inverted for GBP predictions. Seeds 42, 43 and 44 are all reported; seed 42 is the preselected primary model, not chosen using test accuracy.
+
+The implemented hybrid is a convex ensemble of Prophet, XGBoost and LSTM. Shared nonnegative weights summing to one minimise average paired validation squared loss. This addresses complementary model integration while preserving independent algorithms. It is an explicitly justified alternative to the slide arrow suggesting a sequential residual cascade: no residual-chain implementation or claim is made. Validation forecasts are out-of-training-sample for base models but in-sample for hybrid weight fitting; only subsequent test forecasts evaluate the fitted hybrid. Weights may collapse to a single model if validation does not support diversification.
+
+| model | weight |
+| --- | --- |
+| Prophet | 0.273 |
+| XGBoost | 0.088 |
+| LSTM | 0.638 |
+
+## Verified common daily test results
+
+| model | n | MAE | RMSE | MAPE positive only |
+| --- | --- | --- | --- | --- |
+| Prophet_Without_Payday | 105 | 185.174 | 238.652 | 19.738 |
+| Prophet_With_Payday | 105 | 184.163 | 237.650 | 19.812 |
+| XGBoost_Without_Payday | 105 | 324.707 | 435.542 | 25.799 |
+| XGBoost_With_Payday | 105 | 325.701 | 437.262 | 25.647 |
+| LSTM_Without_Payday | 105 | 264.470 | 350.557 | 22.607 |
+| LSTM_With_Payday | 105 | 263.162 | 350.361 | 22.380 |
+| Hybrid_Without_Payday | 105 | 237.738 | 311.218 | 21.108 |
+| Hybrid_With_Payday | 105 | 234.935 | 309.118 | 20.799 |
+| Naive | 105 | 266.913 | 333.495 | 26.813 |
+| Weekly_Seasonal_Naive | 105 | 199.142 | 253.146 | 19.424 |
+
+MAE/RMSE retain full numerical precision in CSVs; only report display is rounded. MAPE is reported only on strictly positive recorded daily targets with its denominator count. It is not a general net-sales accuracy measure and can exaggerate low-sales-day errors. Baselines use previous-day or previous-week recorded revenue; unavailable lag values fall back to the training median.
+
+![Figure 1. Upcoming-day actual recorded net revenue and paired forecasts, GBP per local day.](../outputs/extensions/charts/daily_actual_predictions.png)
+
+![Figure 2. MAE and RMSE on identical recorded daily targets; includes baselines and hybrid.](../outputs/extensions/charts/daily_errors.png)
+
+## Payday effects and subgroups
+
+| family | group | n | MAE change | RMSE change |
+| --- | --- | --- | --- | --- |
+| Prophet | all | 105 | -1.011 | -1.003 |
+| Prophet | payday | 21 | 0.844 | 0.724 |
+| Prophet | non_payday | 84 | -1.474 | -1.333 |
+| XGBoost | all | 105 | 0.994 | 1.720 |
+| XGBoost | payday | 21 | 0.649 | 0.082 |
+| XGBoost | non_payday | 84 | 1.080 | 2.088 |
+| LSTM | all | 105 | -1.308 | -0.196 |
+| LSTM | payday | 21 | -8.790 | -11.753 |
+| LSTM | non_payday | 84 | 0.563 | 2.119 |
+| Hybrid | all | 105 | -2.803 | -2.100 |
+| Hybrid | payday | 21 | -9.637 | -9.738 |
+| Hybrid | non_payday | 84 | -1.095 | -0.613 |
+
+Change is error with payday minus error without payday; negative means improvement. Payday/non-payday subgroup labels use the original monthly flag so the partition stays consistent across all variants. Weekly and working-day proxies may overlap either group; their individual contribution is explained by SHAP, not isolated causal effects.
+
+![Figure 3. Adding the three calendar payroll proxies can improve or worsen errors; results determine the direction.](../outputs/extensions/charts/daily_payday_effect.png)
+
+![Figure 4. Daily signed residuals show temporal underprediction and overprediction.](../outputs/extensions/charts/daily_residuals.png)
+
+## Temporal uncertainty and stability
+
+| family | block days | mean with minus without | ci 2 5 | ci 97 5 |
+| --- | --- | --- | --- | --- |
+| Prophet | 7 | -1.011 | -3.024 | 1.008 |
+| Prophet | 14 | -1.011 | -3.470 | 1.300 |
+| XGBoost | 7 | 0.994 | -3.461 | 5.422 |
+| XGBoost | 14 | 0.994 | -4.097 | 5.273 |
+| LSTM | 7 | -1.308 | -6.476 | 3.589 |
+| LSTM | 14 | -1.308 | -6.134 | 3.542 |
+| Hybrid | 7 | -2.803 | -6.878 | 0.758 |
+| Hybrid | 14 | -2.803 | -6.295 | 0.877 |
+
+Paired daily loss differences use 1,000 circular moving-block bootstrap resamples with 7-day and 14-day blocks. Intervals concern mean absolute or squared loss differences, not RMSE differences. The approach preserves dependence within blocks but assumes approximately stable loss behaviour and omits dependence between blocks. Drift, few monthly cycles and model selection uncertainty limit interpretation; intervals are descriptive sensitivity evidence, not strong causal or universal significance claims. Test days must be contiguous; the comparison log checks this.
+
+| payday | validation start | n | MAE | RMSE |
+| --- | --- | --- | --- | --- |
+| False | 2025-10-01 | 92 | 119.306 | 144.598 |
+| True | 2025-10-01 | 92 | 116.910 | 141.947 |
+| False | 2026-01-01 | 31 | 156.029 | 207.889 |
+| True | 2026-01-01 | 31 | 151.692 | 201.709 |
+| False | 2026-02-01 | 28 | 125.886 | 146.522 |
+| True | 2026-02-01 | 28 | 129.778 | 151.820 |
+| False | 2026-03-01 | 31 | 205.354 | 254.400 |
+| True | 2026-03-01 | 31 | 202.797 | 252.681 |
+
+Expanding-window validation evaluates fixed XGBoost settings before the April test boundary. Monthly test errors are saved for every family, and all three LSTM seeds are reported. These checks cover more than deterministic reruns but do not constitute nested cross-validation of every family. Payday-width sensitivity uses validation only and does not retroactively alter the reported test experiment.
+
+| model | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| LSTM_Without_Payday | 105 | 264.470 | 350.557 |
+| LSTM_With_Payday | 105 | 263.162 | 350.361 |
+| LSTM_Without_Payday_seed_43 | 105 | 258.121 | 339.799 |
+| LSTM_With_Payday_seed_43 | 105 | 254.175 | 336.500 |
+| LSTM_Without_Payday_seed_44 | 105 | 251.202 | 327.862 |
+| LSTM_With_Payday_seed_44 | 105 | 258.966 | 344.585 |
+
+![Figure 5. Monthly daily test errors and all predeclared LSTM seeds show performance variability; no test seed is selected.](../outputs/extensions/charts/stability.png)
+
+| month boundary width | n | MAE | RMSE |
+| --- | --- | --- | --- |
+| 1 | 90 | 153.924 | 198.593 |
+| 3 | 90 | 154.935 | 199.511 |
+| 5 | 90 | 154.935 | 199.511 |
+
+## Department patterns and explainability
+
+Hourly and weekday profiles use signed transaction totals, retaining receipt adjustments in an explicit unknown/adjustment group rather than reallocating them to products. Department-day tables measure recorded sales on recorded shop days; no category transactions imply no recorded category sales, not proof of zero demand. Tables contrast monthly, weekly and last-working-day indicators by category. Unadjusted group differences mix weekday composition, trend, promotions and recording coverage and cannot establish payday causation.
+
+![Figure 6. Largest recorded-revenue categories by local hour and weekday; totals also reflect observation coverage.](../outputs/extensions/charts/department_patterns.png)
+
+![Figure 7. Department payroll-proxy group differences are descriptive associations, not causal customer-payday effects.](../outputs/extensions/charts/department_payday.png)
+
+![Figure 8. Daily weekday means and descriptive payroll-proxy associations.](../outputs/extensions/charts/weekday_payday_eda.png)
+
+| feature | mean absolute shap |
+| --- | --- |
+| rolling_7 | 50.971 |
+| dow_cos | 44.924 |
+| working_day | 25.924 |
+| lag_1 | 24.773 |
+| lag_7 | 24.164 |
+| lag_28 | 19.177 |
+| trend_days | 13.353 |
+| lag_14 | 12.572 |
+
+![Figure 9. Daily XGBoost Without_Payday Tree SHAP contribution distributions in GBP.](../outputs/extensions/charts/XGBoost_Without_Payday_shap.png)
+
+| feature | mean absolute shap |
+| --- | --- |
+| rolling_7 | 54.889 |
+| dow_cos | 39.926 |
+| working_day | 31.687 |
+| lag_7 | 24.373 |
+| lag_1 | 22.066 |
+| trend_days | 19.048 |
+| lag_28 | 15.928 |
+| lag_14 | 15.236 |
+
+| feature | mean absolute shap |
+| --- | --- |
+| weekly_payday | 3.836 |
+| monthly_payday | 0.526 |
+| last_working_payday | 0.479 |
+
+![Figure 10. Daily XGBoost With_Payday Tree SHAP contribution distributions in GBP.](../outputs/extensions/charts/XGBoost_With_Payday_shap.png)
+
+Tree SHAP additivity is numerically checked. Attributions explain fitted model predictions; correlated payroll/calendar flags share attribution. They do not identify actual customer incomes or prove causality. SHAP is applied to XGBoost, not asserted for every model.
+
+## Operational scenarios and limits
+
+| model | peak precision | peak recall | underforecast GBP | overforecast GBP |
+| --- | --- | --- | --- | --- |
+| Prophet_Without_Payday | 0.726 | 0.958 | 8866.274 | 10576.989 |
+| Prophet_With_Payday | 0.729 | 0.972 | 8387.389 | 10949.765 |
+| XGBoost_Without_Payday | 0.848 | 0.389 | 31528.144 | 2566.116 |
+| XGBoost_With_Payday | 0.933 | 0.389 | 31968.387 | 2230.261 |
+| LSTM_Without_Payday | 0.813 | 0.847 | 22759.171 | 5010.197 |
+| LSTM_With_Payday | 0.831 | 0.819 | 22724.510 | 4907.509 |
+| Hybrid_Without_Payday | 0.785 | 0.861 | 19188.979 | 5773.529 |
+| Hybrid_With_Payday | 0.765 | 0.861 | 18981.275 | 5686.910 |
+| Naive | 0.803 | 0.792 | 14604.260 | 13421.600 |
+| Weekly_Seasonal_Naive | 0.829 | 0.806 | 12773.040 | 8136.850 |
+
+The training-only 75th-percentile daily revenue threshold defines a high-revenue workload scenario. Precision/recall evaluate forecasts flagging such days, and asymmetric under/overforecast revenue totals quantify planning risk. No shift scheduling, required staff counts, inventory reorder quantities, stockout savings or profitability improvement is claimed. Revenue is an imperfect workload proxy; actual operational evaluation requires transaction service times, staffing, SKU inventories, lead times and cost data. Department profiles support exploratory planning but cannot replace those inputs.
+
+| model | n | peak hour precision | peak hour recall |
+| --- | --- | --- | --- |
+| Prophet_Without_Payday | 1622 | 0.600 | 0.008 |
+| Prophet_With_Payday | 1622 | 0.545 | 0.008 |
+| XGBoost_Without_Payday | 1622 | 0.620 | 0.578 |
+| XGBoost_With_Payday | 1622 | 0.612 | 0.587 |
+| LSTM_Without_Payday | 1622 | 0.595 | 0.229 |
+| LSTM_With_Payday | 1622 | 0.594 | 0.172 |
+
+The preserved one-hour forecasts also flag high-revenue hours using a separate training-only hourly 75th percentile. This directly explores peak-hour staffing signals, but revenue does not measure queue length or service time. Hourly and daily planning thresholds are distinct.
+
+## Research literature and methodological rationale
+
+Taylor and Letham (2018), Forecasting at Scale, presents a decomposable forecasting approach for analyst-configurable trend and seasonality. It motivates Prophet as an interpretable benchmark, but does not establish this store's payday window. https://facebook.github.io/prophet/static/prophet_paper_20170113.pdf
+
+Chen and Guestrin (2016), XGBoost: A Scalable Tree Boosting System, describes regularised tree boosting and scalable computation. It motivates nonlinear tabular lag/calendar modelling; scalability does not imply generalisation on a single store. https://arxiv.org/abs/1603.02754
+
+Hochreiter and Schmidhuber (1997), Long Short-Term Memory, develops gated recurrent memory for learning temporal dependencies. The present seven-day representation is a research choice, not a guarantee that an LSTM outperforms simpler methods with a small daily sample. https://www.bioinf.jku.at/publications/older/2604.pdf
+
+Lundberg and Lee (2017), A Unified Approach to Interpreting Model Predictions, frames additive feature contributions. It supports explanation of model associations, not causal payday inference. https://arxiv.org/abs/1705.07874
+
+Hyndman and Athanasopoulos, Forecasting: Principles and Practice, describes time-series cross-validation with historical forecast origins and forecast accuracy measures. Chronological evaluation matches information availability; percentage errors are problematic at zero. https://otexts.com/fpp3/tscv.html and https://otexts.com/fpp2/accuracy.html. These methodological sources support design decisions; they do not substantiate sweeping slide claims that all previous retail work uses daily data or single models. A systematic payday/independent-retail literature review remains an academic task.
+
+Holiday source: GOV.UK Bank Holidays API, https://www.api.gov.uk/gds/bank-holidays/ ; frozen JSON snapshot and SHA256 are saved for reproducibility. Sources consulted 8 October 2026.
+
+## Resolved work and remaining evidence requirements
+
+Executed extensions provide direct day forecasts, a genuine hybrid ensemble, holiday/working-day predictors, configurable payroll scenarios, category behavioural outputs, positive-target MAPE, block-dependent uncertainty, expanding XGBoost validation, multi-seed LSTM evaluation, operational proxies and identifier-minimised outputs. No original raw records or research objectives were replaced.
+
+Still requiring external evidence: verified customer/public-sector payday rules; complete trading-day recording and opening hours; practical inventory/staffing/profit measures; consent/lawful-basis and access/retention arrangements; university dissertation formatting and approval. The hybrid is an ensemble rather than the slide's literal residual cascade. The short literature section is not a completed systematic review. These limitations cannot be resolved by inventing data or claiming deployment success.
+
+## Reproduction
+
+From project_by_gpt use python run_extensions.py for additions only, or python run_all.py for both hourly and daily workflows. Independently run src/extension_preparation.py, src/department_analysis.py, src/next_day_prophet.py, src/next_day_xgboost.py, src/next_day_lstm.py, src/hybrid_model.py, src/next_day_comparison.py, src/extension_validation.py and src/extension_report.py in this order. Comparison/reporting load saved forecasts and do not retrain. Cached holidays support offline reruns.

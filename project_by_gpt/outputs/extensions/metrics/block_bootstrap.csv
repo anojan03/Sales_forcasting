@@ -15,3 +15,7 @@ Hybrid,absolute,7,105,-2.8030727122551071,-6.8776469083835279,0.7580065813773883
 Hybrid,absolute,14,105,-2.8030727122551071,-6.2947858760426874,0.87703137664428688,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
 Hybrid,squared,7,105,-1302.4642566167859,-2962.26854458346,277.44910570402681,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
 Hybrid,squared,14,105,-1302.4642566167859,-2943.3597362355299,201.78796069972844,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Sequential_Hybrid,absolute,7,105,-15.21627062682885,-21.414048238654825,-9.6556083960067358,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Sequential_Hybrid,absolute,14,105,-15.21627062682885,-21.899484635530705,-9.1063004127534963,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Sequential_Hybrid,squared,7,105,-11378.548366882404,-15071.599540965413,-7389.2822717838044,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference
+Sequential_Hybrid,squared,14,105,-11378.548366882404,-15085.005004448027,-7042.5023081111385,circular blocks assume approximately stable dependent daily losses; drift and few cycles limit inference

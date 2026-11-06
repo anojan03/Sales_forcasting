@@ -20,7 +20,7 @@ Prophet uses daily targets with weekly seasonality, monthly cyclic regressors, l
 
 LSTM uses seven preceding calendar days of scaled sales, observed masks and calendar features, plus known target-day calendar inputs. One 16-unit LSTM feeds a 16-unit ReLU dense layer and linear output. Adam learning rate 0.001, batch size 32, maximum 40 epochs, patience 5, chronological unshuffled training, restored best validation weights. A training-only target scaler is inverted for GBP predictions. Seeds 42, 43 and 44 are all reported; seed 42 is the preselected primary model, not chosen using test accuracy.
 
-The implemented hybrid is a convex ensemble of Prophet, XGBoost and LSTM. Shared nonnegative weights summing to one minimise average paired validation squared loss. This addresses complementary model integration while preserving independent algorithms. It is an explicitly justified alternative to the slide arrow suggesting a sequential residual cascade: no residual-chain implementation or claim is made. Validation forecasts are out-of-training-sample for base models but in-sample for hybrid weight fitting; only subsequent test forecasts evaluate the fitted hybrid. Weights may collapse to a single model if validation does not support diversification.
+Hybrid is the preserved convex ensemble of Prophet, XGBoost and LSTM. Shared nonnegative weights summing to one minimise average paired validation squared loss. Validation forecasts are out-of-training-sample for base models but in-sample for weight fitting. Sequential_Hybrid is now implemented separately as Prophet plus an XGBoost residual correction plus an LSTM correction of remaining residuals. Its disjoint January-June, July-September and October-December training blocks prevent later stages learning on earlier-stage in-sample residual targets. See research_completion.md for settings and stage diagnostics. The cascade is a later exploratory addition after earlier test results were known; it is not a new blinded confirmatory experiment.
 
 | model | weight |
 | --- | --- |
@@ -40,6 +40,8 @@ The implemented hybrid is a convex ensemble of Prophet, XGBoost and LSTM. Shared
 | LSTM_With_Payday | 105 | 263.162 | 350.361 | 22.380 |
 | Hybrid_Without_Payday | 105 | 237.738 | 311.218 | 21.108 |
 | Hybrid_With_Payday | 105 | 234.935 | 309.118 | 20.799 |
+| Sequential_Hybrid_Without_Payday | 105 | 280.711 | 344.967 | 31.876 |
+| Sequential_Hybrid_With_Payday | 105 | 265.494 | 328.060 | 29.907 |
 | Naive | 105 | 266.913 | 333.495 | 26.813 |
 | Weekly_Seasonal_Naive | 105 | 199.142 | 253.146 | 19.424 |
 
@@ -65,6 +67,9 @@ MAE/RMSE retain full numerical precision in CSVs; only report display is rounded
 | Hybrid | all | 105 | -2.803 | -2.100 |
 | Hybrid | payday | 21 | -9.637 | -9.738 |
 | Hybrid | non_payday | 84 | -1.095 | -0.613 |
+| Sequential_Hybrid | all | 105 | -15.216 | -16.907 |
+| Sequential_Hybrid | payday | 21 | -21.701 | -14.793 |
+| Sequential_Hybrid | non_payday | 84 | -13.595 | -17.396 |
 
 Change is error with payday minus error without payday; negative means improvement. Payday/non-payday subgroup labels use the original monthly flag so the partition stays consistent across all variants. Weekly and working-day proxies may overlap either group; their individual contribution is explained by SHAP, not isolated causal effects.
 
@@ -84,6 +89,8 @@ Change is error with payday minus error without payday; negative means improveme
 | LSTM | 14 | -1.308 | -6.134 | 3.542 |
 | Hybrid | 7 | -2.803 | -6.878 | 0.758 |
 | Hybrid | 14 | -2.803 | -6.295 | 0.877 |
+| Sequential_Hybrid | 7 | -15.216 | -21.414 | -9.656 |
+| Sequential_Hybrid | 14 | -15.216 | -21.899 | -9.106 |
 
 Paired daily loss differences use 1,000 circular moving-block bootstrap resamples with 7-day and 14-day blocks. Intervals concern mean absolute or squared loss differences, not RMSE differences. The approach preserves dependence within blocks but assumes approximately stable loss behaviour and omits dependence between blocks. Drift, few monthly cycles and model selection uncertainty limit interpretation; intervals are descriptive sensitivity evidence, not strong causal or universal significance claims. Test days must be contiguous; the comparison log checks this.
 
@@ -173,6 +180,8 @@ Tree SHAP additivity is numerically checked. Attributions explain fitted model p
 | LSTM_With_Payday | 0.831 | 0.819 | 22724.510 | 4907.509 |
 | Hybrid_Without_Payday | 0.785 | 0.861 | 19188.979 | 5773.529 |
 | Hybrid_With_Payday | 0.765 | 0.861 | 18981.275 | 5686.910 |
+| Sequential_Hybrid_Without_Payday | 0.687 | 0.944 | 3585.269 | 25889.361 |
+| Sequential_Hybrid_With_Payday | 0.690 | 0.958 | 3102.821 | 24774.100 |
 | Naive | 0.803 | 0.792 | 14604.260 | 13421.600 |
 | Weekly_Seasonal_Naive | 0.829 | 0.806 | 12773.040 | 8136.850 |
 
@@ -191,11 +200,11 @@ The preserved one-hour forecasts also flag high-revenue hours using a separate t
 
 ## Research literature and methodological rationale
 
-Taylor and Letham (2018), Forecasting at Scale, presents a decomposable forecasting approach for analyst-configurable trend and seasonality. It motivates Prophet as an interpretable benchmark, but does not establish this store's payday window. https://facebook.github.io/prophet/static/prophet_paper_20170113.pdf
+Taylor and Letham (2017 preprint; subsequently published 2018), Forecasting at Scale, presents a decomposable forecasting approach for analyst-configurable trend and seasonality. It motivates Prophet as an interpretable benchmark, but does not establish this store's payday window. https://peerj.com/preprints/3190.pdf
 
 Chen and Guestrin (2016), XGBoost: A Scalable Tree Boosting System, describes regularised tree boosting and scalable computation. It motivates nonlinear tabular lag/calendar modelling; scalability does not imply generalisation on a single store. https://arxiv.org/abs/1603.02754
 
-Hochreiter and Schmidhuber (1997), Long Short-Term Memory, develops gated recurrent memory for learning temporal dependencies. The present seven-day representation is a research choice, not a guarantee that an LSTM outperforms simpler methods with a small daily sample. https://www.bioinf.jku.at/publications/older/2604.pdf
+Hochreiter and Schmidhuber (1997), Long Short-Term Memory, develops gated recurrent memory for learning temporal dependencies. The present seven-day representation is a research choice, not a guarantee that an LSTM outperforms simpler methods with a small daily sample. https://doi.org/10.1162/neco.1997.9.8.1735
 
 Lundberg and Lee (2017), A Unified Approach to Interpreting Model Predictions, frames additive feature contributions. It supports explanation of model associations, not causal payday inference. https://arxiv.org/abs/1705.07874
 
@@ -207,8 +216,8 @@ Holiday source: GOV.UK Bank Holidays API, https://www.api.gov.uk/gds/bank-holida
 
 Executed extensions provide direct day forecasts, a genuine hybrid ensemble, holiday/working-day predictors, configurable payroll scenarios, category behavioural outputs, positive-target MAPE, block-dependent uncertainty, expanding XGBoost validation, multi-seed LSTM evaluation, operational proxies and identifier-minimised outputs. No original raw records or research objectives were replaced.
 
-Still requiring external evidence: verified customer/public-sector payday rules; complete trading-day recording and opening hours; practical inventory/staffing/profit measures; consent/lawful-basis and access/retention arrangements; university dissertation formatting and approval. The hybrid is an ensemble rather than the slide's literal residual cascade. The short literature section is not a completed systematic review. These limitations cannot be resolved by inventing data or claiming deployment success.
+A separate sequential residual cascade, sourced online employer-payroll experiment, targeted critical literature review and proposed governance/operational protocols are now implemented and documented in research_completion.md. Official employer schedules are not customers' actual paydays. Still requiring external evidence: customer income exposure, complete recording/opening hours, realised inventory/staffing/profit measures and institutional/store governance confirmation. Dissertation work is deferred at the researcher's request. No systematic-review completeness or deployment success is claimed.
 
 ## Reproduction
 
-From project_by_gpt use python run_extensions.py for additions only, or python run_all.py for both hourly and daily workflows. Independently run src/extension_preparation.py, src/department_analysis.py, src/next_day_prophet.py, src/next_day_xgboost.py, src/next_day_lstm.py, src/hybrid_model.py, src/next_day_comparison.py, src/extension_validation.py and src/extension_report.py in this order. Comparison/reporting load saved forecasts and do not retrain. Cached holidays support offline reruns.
+From project_by_gpt use python run_extensions.py for additions only, or python run_all.py for both hourly and daily workflows. After daily preparation and base models, run src/hybrid_model.py, src/sequential_hybrid_model.py, src/online_payroll_analysis.py, src/privacy_export.py, src/next_day_comparison.py, src/extension_validation.py, src/research_completion.py and src/extension_report.py, followed by src/research_notebook.py. Comparison/reporting load saved forecasts and do not retrain. Cached holidays and frozen payroll source records support offline reruns.

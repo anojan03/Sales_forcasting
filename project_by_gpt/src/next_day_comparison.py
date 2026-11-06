@@ -3,11 +3,12 @@ from extension_preparation import *
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-FAMILIES=['Prophet','XGBoost','LSTM','Hybrid']
+FAMILIES=['Prophet','XGBoost','LSTM','Hybrid','Sequential_Hybrid']
 def read(name,split,f):
     p=EXT/'predictions'/f'{name}_{split}.csv'; z=pd.read_csv(p,parse_dates=['timestamp']).set_index('timestamp')
     meta=json.loads(p.with_suffix('.metadata.json').read_text()); provenance=json.loads((EXT/'logs'/'provenance.json').read_text())
     if meta['provenance']!=provenance: raise ValueError('Stale forecast provenance')
+    if name.startswith('Sequential_Hybrid_') and meta['extra']['cascade_config']!=json.loads((ROOT/'cascade_config.json').read_text()): raise ValueError('Stale cascade settings')
     expected=f.iloc[indices(f,split)]
     if not z.index.equals(expected.index) or not z.model.eq(name).all() or not np.isfinite(z[['actual_sales','predicted_sales']]).all().all(): raise ValueError('Alignment or values')
     if not np.allclose(z.actual_sales,expected.sales,rtol=1e-10,atol=1e-8): raise ValueError('Actual mismatch')
@@ -61,7 +62,7 @@ def run():
             a=metrics[(metrics.model==fam+'_Without_Payday')&(metrics.group==group)].iloc[0]; b=metrics[(metrics.model==fam+'_With_Payday')&(metrics.group==group)].iloc[0]
             paired.append({'family':fam,'group':group,'n':a.n,'MAE_change':b.MAE-a.MAE,'RMSE_change':b.RMSE-a.RMSE,'MAE_percent':100*(b.MAE/a.MAE-1),'RMSE_percent':100*(b.RMSE/a.RMSE-1)})
     pd.DataFrame(paired).to_csv(EXT/'metrics'/'payday_effects.csv',index=False,float_format='%.17g')
-    fig,axes=plt.subplots(4,1,figsize=(11,10),sharex=True)
+    fig,axes=plt.subplots(len(FAMILIES),1,figsize=(11,2.5*len(FAMILIES)),sharex=True)
     for fam,ax in zip(FAMILIES,axes):
         ax.plot(merge.index,merge.actual_sales,c='black',label='Actual recorded daily sales')
         for pay in ['Without_Payday','With_Payday']: ax.plot(merge.index,merge[fam+'_'+pay],label=pay)
@@ -72,12 +73,14 @@ def run():
     for ax,col in zip(axes,['MAE','RMSE']): ax.barh(main.model,main[col]); ax.set(xlabel=f'{col} GBP/day',title='Same upcoming-day test targets')
     fig.tight_layout(); fig.savefig(EXT/'charts'/'daily_errors.png',dpi=150); plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(11,4)); effect=pd.DataFrame(paired).query("group=='all'")
-    for ax,col in zip(axes,['MAE_change','RMSE_change']): ax.bar(effect.family,effect[col]); ax.axhline(0,c='black'); ax.set(title=col,ylabel='With minus without GBP/day')
+    for ax,col in zip(axes,['MAE_change','RMSE_change']):
+        ax.bar(np.arange(len(effect)),effect[col]); ax.set_xticks(np.arange(len(effect)),effect.family.str.replace('_','\n')); ax.axhline(0,c='black'); ax.set(title=col,ylabel='With minus without GBP/day')
     fig.tight_layout(); fig.savefig(EXT/'charts'/'daily_payday_effect.png',dpi=150); plt.close(fig)
-    fig,axes=plt.subplots(2,2,figsize=(11,7))
+    fig,axes=plt.subplots(int(np.ceil(len(FAMILIES)/2)),2,figsize=(11,3.5*int(np.ceil(len(FAMILIES)/2))))
     for ax,fam in zip(axes.flat,FAMILIES):
         for pay in ['Without_Payday','With_Payday']: ax.plot(merge.index,merge[fam+'_'+pay]-merge.actual_sales,label=pay)
         ax.axhline(0,c='black'); ax.set(title=fam,ylabel='Residual GBP/day'); ax.legend(fontsize=6)
+    for ax in axes.flat[len(FAMILIES):]: ax.set_visible(False)
     fig.autofmt_xdate(); fig.tight_layout(); fig.savefig(EXT/'charts'/'daily_residuals.png',dpi=150); plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(12,5)); temporal=pd.DataFrame(periods)
     for fam in FAMILIES:

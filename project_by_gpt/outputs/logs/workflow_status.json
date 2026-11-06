@@ -126,9 +126,36 @@
     ]
   },
   {
+    "step": "sequential_hybrid_model",
+    "returncode": 0,
+    "elapsed_seconds": 52.174103021621704,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\sequential_hybrid_model.py"
+    ]
+  },
+  {
+    "step": "online_payroll_analysis",
+    "returncode": 0,
+    "elapsed_seconds": 9.00133204460144,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\online_payroll_analysis.py"
+    ]
+  },
+  {
+    "step": "privacy_export",
+    "returncode": 0,
+    "elapsed_seconds": 6.060075759887695,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\privacy_export.py"
+    ]
+  },
+  {
     "step": "next_day_comparison",
     "returncode": 0,
-    "elapsed_seconds": 14.195736408233643,
+    "elapsed_seconds": 10.917520999908447,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\next_day_comparison.py"
@@ -137,16 +164,25 @@
   {
     "step": "extension_validation",
     "returncode": 0,
-    "elapsed_seconds": 15.645274639129639,
+    "elapsed_seconds": 7.036223888397217,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\extension_validation.py"
     ]
   },
   {
+    "step": "research_completion",
+    "returncode": 0,
+    "elapsed_seconds": 6.811890602111816,
+    "command": [
+      "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\research_completion.py"
+    ]
+  },
+  {
     "step": "extension_report",
     "returncode": 0,
-    "elapsed_seconds": 6.549567222595215,
+    "elapsed_seconds": 9.38849401473999,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\extension_report.py"
@@ -155,7 +191,7 @@
   {
     "step": "research_notebook",
     "returncode": 0,
-    "elapsed_seconds": 6.644012212753296,
+    "elapsed_seconds": 8.191169261932373,
     "command": [
       "C:\\Users\\user\\Downloads\\datasets_project\\.venv\\Scripts\\python.exe",
       "C:\\Users\\user\\Downloads\\datasets_project\\project_by_gpt\\src\\research_notebook.py"

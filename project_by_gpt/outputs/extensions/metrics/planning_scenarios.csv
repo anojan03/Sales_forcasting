@@ -7,6 +7,8 @@ LSTM_Without_Payday,867.49,0.8133333333333334,0.8472222222222222,22759.170773925
 LSTM_With_Payday,867.49,0.8309859154929577,0.8194444444444444,22724.509980468752,4907.509025878906,"illustrative revenue workload proxy, not staffing costs or stock units"
 Hybrid_Without_Payday,867.49,0.7848101265822784,0.8611111111111112,19188.97868724615,5773.529260914511,"illustrative revenue workload proxy, not staffing costs or stock units"
 Hybrid_With_Payday,867.49,0.7654320987654321,0.8611111111111112,18981.27524956926,5686.910063804617,"illustrative revenue workload proxy, not staffing costs or stock units"
+Sequential_Hybrid_Without_Payday,867.49,0.6868686868686869,0.9444444444444444,3585.2694096732566,25889.36068517693,"illustrative revenue workload proxy, not staffing costs or stock units"
+Sequential_Hybrid_With_Payday,867.49,0.69,0.9583333333333334,3102.8213401471776,24774.10033888598,"illustrative revenue workload proxy, not staffing costs or stock units"
 Naive,867.49,0.8028169014084507,0.7916666666666666,14604.260000000002,13421.600000000002,"illustrative revenue workload proxy, not staffing costs or stock units"
 Weekly_Seasonal_Naive,867.49,0.8285714285714286,0.8055555555555556,12773.04,8136.850000000001,"illustrative revenue workload proxy, not staffing costs or stock units"
 LSTM_Without_Payday_seed_43,867.49,0.7948717948717948,0.8611111111111112,22081.702268066405,5021.034748535157,"illustrative revenue workload proxy, not staffing costs or stock units"
